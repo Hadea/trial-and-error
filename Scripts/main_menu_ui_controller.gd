@@ -1,0 +1,13 @@
+extends Control
+
+func _on_cleaning_game_button() -> void:
+	get_tree().change_scene_to_file("res://Scenes/CleaningGame.tscn")
+
+func _on_load_game_button() -> void:
+	pass # just showing how disabled buttons work, no code needed
+
+func _on_options_button() -> void:
+	get_tree().change_scene_to_file("res://Scenes/FontSizeUI.tscn")
+
+func _on_exit_button() -> void:
+	get_tree().quit()

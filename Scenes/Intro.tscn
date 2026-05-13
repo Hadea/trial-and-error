@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://cq8pxygja2n3o"]
+
+[ext_resource type="Script" uid="uid://dha1xrrxry1fv" path="res://Scripts/intro_controller.gd" id="1_gjrx4"]
+
+[node name="Intro" type="Node2D" unique_id=1572250997]
+script = ExtResource("1_gjrx4")
+
+[node name="Label" type="Label" parent="." unique_id=948499466]
+offset_left = 523.0
+offset_top = 326.0
+offset_right = 563.0
+offset_bottom = 349.0
+theme_override_font_sizes/font_size = 24
+text = "Intro Scene"

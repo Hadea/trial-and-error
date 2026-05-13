@@ -1,0 +1,48 @@
+[gd_scene format=3 uid="uid://c61dl1khoe50"]
+
+[ext_resource type="Shader" uid="uid://c87akb41v6cfr" path="res://Scripts/TextureBlend.gdshader" id="1_ecmpo"]
+[ext_resource type="Script" uid="uid://grybhwv23dl2" path="res://Scripts/cleaning_game_controller.gd" id="1_mbcul"]
+[ext_resource type="Texture2D" uid="uid://bj1ofd7ylxvr" path="res://Ressources/Book.png" id="3_b4bhb"]
+[ext_resource type="Texture2D" uid="uid://bon8pkfge8qvc" path="res://Ressources/Dirt.png" id="4_ps5pu"]
+[ext_resource type="Texture2D" uid="uid://c0lt81fbkoge2" path="res://Ressources/eraser.png" id="5_b4bhb"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_hh587"]
+shader = ExtResource("1_ecmpo")
+shader_parameter/color_r = 0.0
+shader_parameter/color_g = 0.0
+shader_parameter/color_b = 0.0
+shader_parameter/BookTexture = ExtResource("3_b4bhb")
+shader_parameter/DirtTexture = ExtResource("4_ps5pu")
+
+[node name="CleaningGame" type="Node2D" unique_id=2142363217 node_paths=PackedStringArray("EraserSprite", "Book", "debugLabel")]
+script = ExtResource("1_mbcul")
+EraserSprite = NodePath("EraserSprite2D")
+Book = NodePath("BookSprite2D")
+debugLabel = NodePath("Label")
+
+[node name="BrushSizeVSlider" type="VSlider" parent="." unique_id=438338352]
+offset_right = 25.0
+offset_bottom = 645.0
+min_value = 2.0
+max_value = 30.0
+step = 2.0
+value = 20.0
+
+[node name="BookSprite2D" type="Sprite2D" parent="." unique_id=290668451]
+texture_filter = 1
+texture_repeat = 1
+material = SubResource("ShaderMaterial_hh587")
+position = Vector2(548, 315)
+texture = ExtResource("3_b4bhb")
+
+[node name="EraserSprite2D" type="Sprite2D" parent="." unique_id=883102701]
+position = Vector2(302, 199)
+texture = ExtResource("5_b4bhb")
+
+[node name="Label" type="Label" parent="." unique_id=1013888284]
+offset_left = 521.0
+offset_top = 7.0
+offset_right = 561.0
+offset_bottom = 30.0
+horizontal_alignment = 1
+vertical_alignment = 1
