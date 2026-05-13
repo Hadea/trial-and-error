@@ -105,10 +105,11 @@ func _cleanAtCoords(coords: Vector2) -> void:
 	
 func _updateProgress() -> void: # updates the progressbar to the current value of the cleaning progress of a specific cleaning layer
 	DustCompletionProgressBar.value = 100.0 / (pixelAmount-pixelStatus[cleaningLayers.DUST].y) * (pixelStatus[cleaningLayers.DUST].x - pixelStatus[cleaningLayers.DUST].y)
-	DustCompletionProgressBar.value = 100.0 / (pixelAmount-pixelStatus[cleaningLayers.STAIN].y) * (pixelStatus[cleaningLayers.STAIN].x - pixelStatus[cleaningLayers.STAIN].y)
-	DustCompletionProgressBar.value = 100.0 / (pixelAmount-pixelStatus[cleaningLayers.RUBBER].y) * (pixelStatus[cleaningLayers.RUBBER].x - pixelStatus[cleaningLayers.RUBBER].y)
-	DustCompletionProgressBar.value = 100.0 / (pixelAmount-pixelStatus[cleaningLayers.WAX].y) * (pixelStatus[cleaningLayers.WAX].x - pixelStatus[cleaningLayers.WAX].y) # needs inversion since we want WAX everywhere
+	StainCompletionProgressBar.value = 100.0 / (pixelAmount-pixelStatus[cleaningLayers.STAIN].y) * (pixelStatus[cleaningLayers.STAIN].x - pixelStatus[cleaningLayers.STAIN].y)
+	RubberCompletionProgressBar.value = 100.0 / (pixelAmount-pixelStatus[cleaningLayers.RUBBER].y) * (pixelStatus[cleaningLayers.RUBBER].x - pixelStatus[cleaningLayers.RUBBER].y)
+	WaxCompletionProgressBar.value = 100.0 / (pixelAmount-pixelStatus[cleaningLayers.WAX].y) * (pixelStatus[cleaningLayers.WAX].x - pixelStatus[cleaningLayers.WAX].y) # needs inversion since we want WAX everywhere
 	#CompletionProgressBar.value = 100.0 / (pixelAmount-pixelAlreadyClean) * (getCleanedPixelCount() - pixelAlreadyClean) # old calc
+ 
 
 
 func _input(event: InputEvent):
