@@ -89,7 +89,7 @@ func _cleanAtCoords(coords: Vector2) -> void:
 			
 	var sprite:  ImageTexture = ImageTexture.create_from_image(imageToProcess)
 	
-	getCleanedPixelCount(currentCleaningLayer)
+	pixelStatus[currentCleaningLayer].x = getCleanedPixelCount(currentCleaningLayer)
 	# sending modified image to shader
 	match currentCleaningLayer:
 		cleaningLayers.DUST:
