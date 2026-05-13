@@ -40,14 +40,15 @@ func _enter_tree() -> void:
 	Book.material.set_shader_parameter("WaxTexture", texImage)
 	
 	
-	pixelStatus[cleaningLayers.DUST].y = getCleanedPixelCount(cleaningLayers.DUST)
-	pixelStatus[cleaningLayers.STAIN].y = getCleanedPixelCount(cleaningLayers.STAIN)
-	pixelStatus[cleaningLayers.RUBBER].y = getCleanedPixelCount(cleaningLayers.RUBBER)
-	pixelStatus[cleaningLayers.WAX].y = getCleanedPixelCount(cleaningLayers.WAX)
+	pixelStatus[cleaningLayers.DUST].y = _getCleanedPixelCount(cleaningLayers.DUST)
+	pixelStatus[cleaningLayers.STAIN].y = _getCleanedPixelCount(cleaningLayers.STAIN)
+	pixelStatus[cleaningLayers.RUBBER].y = _getCleanedPixelCount(cleaningLayers.RUBBER)
+	pixelStatus[cleaningLayers.WAX].y = _getCleanedPixelCount(cleaningLayers.WAX)
 	
 	pixelAmount = DustSprite.get_width() * DustSprite.get_height();	
 	eraserTransform = EraserSprite.transform
 	BrushSizeVSlider.value = 20
+	_on_brush_size_v_slider_value_changed(BrushSizeVSlider.value)
 
 func _process(delta: float) -> void:
 	EraserSprite.position = get_viewport().get_mouse_position() - Vector2(EraserSprite.get_rect().get_center())
@@ -89,7 +90,9 @@ func _cleanAtCoords(coords: Vector2) -> void:
 			
 	var sprite:  ImageTexture = ImageTexture.create_from_image(imageToProcess)
 	
-	pixelStatus[currentCleaningLayer].x = getCleanedPixelCount(currentCleaningLayer)
+	pixelStatus[currentCleaningLayer].x = _getCleanedPixelCount(currentCleaningLayer)
+	_updateProgress()
+	
 	# sending modified image to shader
 	match currentCleaningLayer:
 		cleaningLayers.DUST:
@@ -100,8 +103,6 @@ func _cleanAtCoords(coords: Vector2) -> void:
 			Book.material.set_shader_parameter("RubberTexture", sprite)
 		cleaningLayers.WAX:
 			Book.material.set_shader_parameter("WaxTexture", sprite)
-
-	_updateProgress()
 	
 func _updateProgress() -> void: # updates the progressbar to the current value of the cleaning progress of a specific cleaning layer
 	DustCompletionProgressBar.value = 100.0 / (pixelAmount-pixelStatus[cleaningLayers.DUST].y) * (pixelStatus[cleaningLayers.DUST].x - pixelStatus[cleaningLayers.DUST].y)
@@ -122,7 +123,7 @@ func _input(event: InputEvent):
 		if event.is_released():
 			isCleaning = false
 		
-func getCleanedPixelCount(layerToCount: cleaningLayers) -> int:
+func _getCleanedPixelCount(layerToCount: cleaningLayers) -> int:
 
 	# selecting the image to process
 	var imageToCount: Image
