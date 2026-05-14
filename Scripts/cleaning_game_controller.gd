@@ -27,7 +27,6 @@ extends Node2D
 @export var ToolWaxStrength: float ## alpha change per second on the wax layer
 @export var ToolWaxSize: int ## radius in pixel affected by cleaning
 @export var ToolWaxGradient: bool ## if set to true, a linear gradient will be used
-@export var WaxSprite: Image ## can be removed soon
 @export var WaxColor: Color ## color replaces image
 @export var WaxCompletionProgressBar: ProgressBar
 
@@ -41,6 +40,7 @@ var eraserTransform: Transform2D
 var pixelStatus: Array[Vector2i] = [Vector2i(0,0),Vector2i(0,0),Vector2i(0,0),Vector2i(0,0)] # tracks the amount of cleaned pixel , x current cleaned; y already clean at startup
 var pixelAmount: int = 0
 var selectedToolSprite: Sprite2D
+var WaxSprite: Image ## buffer for waxing. fully transparent and filled with wax tool
 
 
 enum cleaningLayers {DUST, STAIN, RUBBER, WAX}
@@ -53,6 +53,8 @@ func _enter_tree() -> void:
 	Book.material.set_shader_parameter("StainTexture", texImage)
 	texImage = ImageTexture.create_from_image(RubberSprite)
 	Book.material.set_shader_parameter("RubberTexture", texImage)
+	#texImage = ImageTexture.create_from_image(WaxSprite)
+	WaxSprite = Image.create_empty(texImage.get_width(), texImage.get_height(), false,Image.FORMAT_RGBA8)
 	texImage = ImageTexture.create_from_image(WaxSprite)
 	Book.material.set_shader_parameter("WaxTexture", texImage)
 	
@@ -148,8 +150,12 @@ func _getCleanedPixelCount(layerToCount: cleaningLayers) -> int:
 	var cleanPixel : int = 0
 	for y in imageToCount.get_height()-1:
 		for x in imageToCount.get_width()-1:
-			if imageToCount.get_pixel(x,y).a == 0 :
-				cleanPixel+=1
+			if layerToCount == cleaningLayers.WAX:
+				if imageToCount.get_pixel(x,y) == WaxColor:
+					cleanPixel+=1
+			else:
+				if imageToCount.get_pixel(x,y).a == 0:
+					cleanPixel+=1
 	return cleanPixel
 
 
@@ -170,15 +176,18 @@ func _cleanCircular(imageToClean: Image, coords: Vector2i, radius: int, strength
 			var distance2: int = dotX * dotX + dotY * dotY 
 			if distance2 <= r2:
 				var currentPixel: Color = imageToClean.get_pixel(x,y)
-				if gradient:
-					currentPixel.a= max(0, currentPixel.a - strength * (r2 / max(distance2,0.01)))
+				if currentCleaningLayer == cleaningLayers.WAX:
+					currentPixel = WaxColor
 				else:
-					currentPixel.a= max(0, currentPixel.a - strength)
+					if gradient:
+						currentPixel.a= max(0, currentPixel.a - strength * (r2 / max(distance2,0.01)))
+					else:
+						currentPixel.a= max(0, currentPixel.a - strength)
 				
 				imageToClean.set_pixel(x, y, currentPixel)
 
 
-func _on_cleaning_technique_selected(index: int) -> void:
+func _on_cleaning_technique_selected(index: cleaningLayers) -> void:
 	currentCleaningLayer = index
 	ToolDustSprite.visible = false
 	ToolRubberSprite.visible = false
