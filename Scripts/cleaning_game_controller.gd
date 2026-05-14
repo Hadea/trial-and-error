@@ -170,7 +170,11 @@ func _cleanCircular(imageToClean: Image, coords: Vector2i, radius: int, strength
 			var distance2: int = dotX * dotX + dotY * dotY 
 			if distance2 <= r2:
 				var currentPixel: Color = imageToClean.get_pixel(x,y)
-				currentPixel.a= max(0, currentPixel.a - strength * (r2 / max(distance2,0.01)))
+				if gradient:
+					currentPixel.a= max(0, currentPixel.a - strength * (r2 / max(distance2,0.01)))
+				else:
+					currentPixel.a= max(0, currentPixel.a - strength)
+				
 				imageToClean.set_pixel(x, y, currentPixel)
 
 

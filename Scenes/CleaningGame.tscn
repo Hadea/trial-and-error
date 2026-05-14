@@ -35,7 +35,7 @@ ToolStainGradient = true
 StainSprite = ExtResource("7_0484r")
 StainCompletionProgressBar = NodePath("VBoxContainer/HBoxContainer2/StainCompletionProgressBar")
 ToolRubberSprite = NodePath("RubberSprite2D")
-ToolRubberStrength = 0.5
+ToolRubberStrength = 1.0
 ToolRubberSize = 10
 RubberSprite = ExtResource("6_1cftx")
 RubberCompletionProgressBar = NodePath("VBoxContainer/HBoxContainer3/RubberCompletionProgressBar")
@@ -59,6 +59,7 @@ texture = ExtResource("3_b4bhb")
 texture = ExtResource("9_4np08")
 
 [node name="RubberSprite2D" type="Sprite2D" parent="." unique_id=1188632008]
+scale = Vector2(0.5, 0.5)
 texture = ExtResource("10_eyiaq")
 
 [node name="ClothSprite2D" type="Sprite2D" parent="." unique_id=1627881847]
