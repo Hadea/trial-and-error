@@ -5,24 +5,28 @@ extends Node2D
 @export var ToolDustSprite: Sprite2D
 @export var ToolDustStrength: float ## alpha change per second on the dust layer
 @export var ToolDustSize: int ## radius in pixel affected by cleaning
+@export var ToolDustGradient: bool ## if set to true, a linear gradient will be used
 @export var DustSprite: Image
 @export var DustCompletionProgressBar: ProgressBar
 @export_group("Stain Remover Properties")
 @export var ToolStainSprite: Sprite2D
 @export var ToolStainStrength: float ## alpha change per second on the stain layer
 @export var ToolStainSize: int ## radius in pixel affected by cleaning
+@export var ToolStainGradient: bool ## if set to true, a linear gradient will be used
 @export var StainSprite: Image
 @export var StainCompletionProgressBar: ProgressBar
 @export_group("Rubber Remover Properties")
 @export var ToolRubberSprite: Sprite2D
 @export var ToolRubberStrength: float ## alpha change per second on the rubber layer
 @export var ToolRubberSize: int ## radius in pixel affected by cleaning
+@export var ToolRubberGradient: bool ## if set to true, a linear gradient will be used
 @export var RubberSprite: Image
 @export var RubberCompletionProgressBar: ProgressBar
 @export_group("Wax Adder Properties")
 @export var ToolWaxSprite: Sprite2D
 @export var ToolWaxStrength: float ## alpha change per second on the wax layer
 @export var ToolWaxSize: int ## radius in pixel affected by cleaning
+@export var ToolWaxGradient: bool ## if set to true, a linear gradient will be used
 @export var WaxSprite: Image ## can be removed soon
 @export var WaxColor: Color ## color replaces image
 @export var WaxCompletionProgressBar: ProgressBar
@@ -80,25 +84,25 @@ func _cleanAtCoords(delta: float, coords: Vector2) -> void:
 		cleaningLayers.DUST:
 			imageToProcess = DustSprite
 
-			_cleanCircular(imageToProcess, coords, ToolDustSize, ToolDustStrength * delta)
+			_cleanCircular(imageToProcess, coords, ToolDustSize, ToolDustStrength * delta, ToolDustGradient)
 			var sprite:  ImageTexture = ImageTexture.create_from_image(imageToProcess)
 			Book.material.set_shader_parameter("DustTexture", sprite)
 			
 		cleaningLayers.STAIN:
 			imageToProcess = StainSprite
-			_cleanCircular(imageToProcess, coords, ToolStainSize, ToolStainStrength * delta)
+			_cleanCircular(imageToProcess, coords, ToolStainSize, ToolStainStrength * delta, ToolStainGradient)
 			var sprite:  ImageTexture = ImageTexture.create_from_image(imageToProcess)
 			Book.material.set_shader_parameter("StainTexture", sprite)
 			
 		cleaningLayers.RUBBER:
 			imageToProcess = RubberSprite
-			_cleanCircular(imageToProcess, coords, ToolRubberSize, ToolRubberStrength * delta)
+			_cleanCircular(imageToProcess, coords, ToolRubberSize, ToolRubberStrength * delta, ToolRubberGradient)
 			var sprite:  ImageTexture = ImageTexture.create_from_image(imageToProcess)
 			Book.material.set_shader_parameter("RubberTexture", sprite)
 
 		cleaningLayers.WAX:
 			imageToProcess = WaxSprite
-			_cleanCircular(imageToProcess, coords, ToolWaxSize, ToolWaxStrength * delta)
+			_cleanCircular(imageToProcess, coords, ToolWaxSize, ToolWaxStrength * delta, ToolWaxGradient)
 			var sprite:  ImageTexture = ImageTexture.create_from_image(imageToProcess)
 			Book.material.set_shader_parameter("WaxTexture", sprite)
 
@@ -149,7 +153,7 @@ func _getCleanedPixelCount(layerToCount: cleaningLayers) -> int:
 	return cleanPixel
 
 
-func _cleanCircular(imageToClean: Image, coords: Vector2i, radius: int, strength: float):
+func _cleanCircular(imageToClean: Image, coords: Vector2i, radius: int, strength: float, gradient: bool):
 	var r2: int = radius * radius
 	
 	for y in range(coords.y-radius, coords.y+radius):
@@ -163,9 +167,10 @@ func _cleanCircular(imageToClean: Image, coords: Vector2i, radius: int, strength
 			
 			var dotX: int = x - coords.x
 			var dotY: int = y - coords.y
-			if dotX * dotX + dotY*dotY <= r2:
+			var distance2: int = dotX * dotX + dotY * dotY 
+			if distance2 <= r2:
 				var currentPixel: Color = imageToClean.get_pixel(x,y)
-				currentPixel.a= max(0, currentPixel.a - strength)
+				currentPixel.a= max(0, currentPixel.a - strength * (r2 / max(distance2,0.01)))
 				imageToClean.set_pixel(x, y, currentPixel)
 
 
