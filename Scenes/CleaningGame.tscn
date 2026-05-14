@@ -3,11 +3,14 @@
 [ext_resource type="Script" uid="uid://grybhwv23dl2" path="res://Scripts/cleaning_game_controller.gd" id="1_mbcul"]
 [ext_resource type="Texture2D" uid="uid://bj1ofd7ylxvr" path="res://Ressources/Book.png" id="3_b4bhb"]
 [ext_resource type="Image" uid="uid://cw663g1iyylca" path="res://Ressources/Dirt.png" id="3_q78po"]
-[ext_resource type="Texture2D" uid="uid://c0lt81fbkoge2" path="res://Ressources/eraser.png" id="5_b4bhb"]
 [ext_resource type="Shader" uid="uid://c0ftr0mi33e1u" path="res://Scripts/MultiTextureBlend.gdshader" id="5_ps5pu"]
 [ext_resource type="Image" uid="uid://bttfs12c7412c" path="res://Ressources/pencil-marks.png" id="6_1cftx"]
 [ext_resource type="Image" uid="uid://b3q1qrtjedlwx" path="res://Ressources/coffee-stain.png" id="7_0484r"]
 [ext_resource type="Image" uid="uid://cl7ubl44ilwn1" path="res://Ressources/Wax.png" id="8_tdhi6"]
+[ext_resource type="Texture2D" uid="uid://dca2uad5mvh8d" path="res://Ressources/wax.png" id="9_4np08"]
+[ext_resource type="Texture2D" uid="uid://d27qphgink1iu" path="res://Ressources/rubber.png" id="10_eyiaq"]
+[ext_resource type="Texture2D" uid="uid://ck5tdx5sc31i2" path="res://Ressources/cloth.png" id="11_42nv4"]
+[ext_resource type="Texture2D" uid="uid://bndyslauxistp" path="res://Ressources/brush.png" id="12_q6h5m"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_q78po"]
 shader = ExtResource("5_ps5pu")
@@ -16,30 +19,32 @@ shader = ExtResource("5_ps5pu")
 shader = ExtResource("5_ps5pu")
 shader_parameter/BookTexture = ExtResource("3_b4bhb")
 
-[node name="CleaningGame" type="Node2D" unique_id=2142363217 node_paths=PackedStringArray("EraserSprite", "Book", "debugLabel", "BrushSizeVSlider", "DustCompletionProgressBar", "StainCompletionProgressBar", "RubberCompletionProgressBar", "WaxCompletionProgressBar")]
+[node name="CleaningGame" type="Node2D" unique_id=2142363217 node_paths=PackedStringArray("ToolDustSprite", "DustCompletionProgressBar", "ToolStainSprite", "StainCompletionProgressBar", "ToolRubberSprite", "RubberCompletionProgressBar", "ToolWaxSprite", "WaxCompletionProgressBar", "Book", "debugLabel")]
 material = SubResource("ShaderMaterial_q78po")
 script = ExtResource("1_mbcul")
-EraserSprite = NodePath("EraserSprite2D")
-Book = NodePath("BookSprite2D")
+ToolDustSprite = NodePath("BrushSprite2D")
+ToolDustStrength = 0.5
+ToolDustSize = 20
 DustSprite = ExtResource("3_q78po")
+DustCompletionProgressBar = NodePath("VBoxContainer/HBoxContainer/DustCompletionProgressBar")
+ToolStainSprite = NodePath("ClothSprite2D")
+ToolStainStrength = 0.2
+ToolStainSize = 50
 StainSprite = ExtResource("7_0484r")
+StainCompletionProgressBar = NodePath("VBoxContainer/HBoxContainer2/StainCompletionProgressBar")
+ToolRubberSprite = NodePath("RubberSprite2D")
+ToolRubberStrength = 0.5
+ToolRubberSize = 10
 RubberSprite = ExtResource("6_1cftx")
+RubberCompletionProgressBar = NodePath("VBoxContainer/HBoxContainer3/RubberCompletionProgressBar")
+ToolWaxSprite = NodePath("WaxSprite2D")
+ToolWaxStrength = -0.5
+ToolWaxSize = 30
 WaxSprite = ExtResource("8_tdhi6")
 WaxColor = Color(0.8509804, 0.972549, 0.21960784, 0.2627451)
-debugLabel = NodePath("DebugLabel")
-BrushSizeVSlider = NodePath("BrushSizeVSlider")
-DustCompletionProgressBar = NodePath("VBoxContainer/HBoxContainer/DustCompletionProgressBar")
-StainCompletionProgressBar = NodePath("VBoxContainer/HBoxContainer2/StainCompletionProgressBar")
-RubberCompletionProgressBar = NodePath("VBoxContainer/HBoxContainer3/RubberCompletionProgressBar")
 WaxCompletionProgressBar = NodePath("VBoxContainer/HBoxContainer4/WaxCompletionProgressBar")
-
-[node name="BrushSizeVSlider" type="VSlider" parent="." unique_id=438338352]
-offset_right = 25.0
-offset_bottom = 645.0
-min_value = 2.0
-max_value = 30.0
-step = 2.0
-value = 20.0
+Book = NodePath("BookSprite2D")
+debugLabel = NodePath("DebugLabel")
 
 [node name="BookSprite2D" type="Sprite2D" parent="." unique_id=598197719]
 texture_filter = 1
@@ -48,9 +53,17 @@ material = SubResource("ShaderMaterial_q4put")
 position = Vector2(548, 315)
 texture = ExtResource("3_b4bhb")
 
-[node name="EraserSprite2D" type="Sprite2D" parent="." unique_id=883102701]
-position = Vector2(302, 199)
-texture = ExtResource("5_b4bhb")
+[node name="WaxSprite2D" type="Sprite2D" parent="." unique_id=1147193098]
+texture = ExtResource("9_4np08")
+
+[node name="RubberSprite2D" type="Sprite2D" parent="." unique_id=1188632008]
+texture = ExtResource("10_eyiaq")
+
+[node name="ClothSprite2D" type="Sprite2D" parent="." unique_id=1627881847]
+texture = ExtResource("11_42nv4")
+
+[node name="BrushSprite2D" type="Sprite2D" parent="." unique_id=885784799]
+texture = ExtResource("12_q6h5m")
 
 [node name="DebugLabel" type="Label" parent="." unique_id=1013888284]
 offset_left = 521.0
@@ -124,5 +137,4 @@ text = "Wax      "
 layout_mode = 2
 size_flags_horizontal = 3
 
-[connection signal="value_changed" from="BrushSizeVSlider" to="." method="_on_brush_size_v_slider_value_changed"]
 [connection signal="item_selected" from="VBoxContainer/CleaningTechniqueOptionButton" to="." method="_on_cleaning_technique_selected"]

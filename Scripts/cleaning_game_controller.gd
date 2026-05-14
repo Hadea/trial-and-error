@@ -1,35 +1,48 @@
 extends Node2D
 
 # external data
-@export var EraserSprite: Sprite2D
-@export var Book: Sprite2D
+@export_group("Dust Remover Properties")
+@export var ToolDustSprite: Sprite2D
+@export var ToolDustStrength: float ## alpha change per second on the dust layer
+@export var ToolDustSize: int ## radius in pixel affected by cleaning
 @export var DustSprite: Image
-@export var StainSprite: Image
-@export var RubberSprite: Image
-@export var WaxSprite: Image
-@export var WaxColor: Color
-@export var debugLabel: Label
-@export var BrushSizeVSlider: VSlider
 @export var DustCompletionProgressBar: ProgressBar
+@export_group("Stain Remover Properties")
+@export var ToolStainSprite: Sprite2D
+@export var ToolStainStrength: float ## alpha change per second on the stain layer
+@export var ToolStainSize: int ## radius in pixel affected by cleaning
+@export var StainSprite: Image
 @export var StainCompletionProgressBar: ProgressBar
+@export_group("Rubber Remover Properties")
+@export var ToolRubberSprite: Sprite2D
+@export var ToolRubberStrength: float ## alpha change per second on the rubber layer
+@export var ToolRubberSize: int ## radius in pixel affected by cleaning
+@export var RubberSprite: Image
 @export var RubberCompletionProgressBar: ProgressBar
+@export_group("Wax Adder Properties")
+@export var ToolWaxSprite: Sprite2D
+@export var ToolWaxStrength: float ## alpha change per second on the wax layer
+@export var ToolWaxSize: int ## radius in pixel affected by cleaning
+@export var WaxSprite: Image ## can be removed soon
+@export var WaxColor: Color ## color replaces image
 @export var WaxCompletionProgressBar: ProgressBar
+
+@export_group("")
+@export var Book: Sprite2D
+@export var debugLabel: Label
 
 # internal data
 var isCleaning: bool = false
-var cleanPixelSize: int
 var eraserTransform: Transform2D
 var pixelStatus: Array[Vector2i] = [Vector2i(0,0),Vector2i(0,0),Vector2i(0,0),Vector2i(0,0)] # tracks the amount of cleaned pixel , x current cleaned; y already clean at startup
 var pixelAmount: int = 0
+var selectedToolSprite: Sprite2D
 
 
 enum cleaningLayers {DUST, STAIN, RUBBER, WAX}
 var currentCleaningLayer: cleaningLayers = cleaningLayers.DUST
 
 func _enter_tree() -> void:
-	currentCleaningLayer = cleaningLayers.DUST
-	Book.material.get("BookTexture")
-	
 	var texImage: ImageTexture = ImageTexture.create_from_image(DustSprite)
 	Book.material.set_shader_parameter("DustTexture", texImage)
 	texImage = ImageTexture.create_from_image(StainSprite)
@@ -39,78 +52,69 @@ func _enter_tree() -> void:
 	texImage = ImageTexture.create_from_image(WaxSprite)
 	Book.material.set_shader_parameter("WaxTexture", texImage)
 	
-	
 	pixelStatus[cleaningLayers.DUST].y = _getCleanedPixelCount(cleaningLayers.DUST)
 	pixelStatus[cleaningLayers.STAIN].y = _getCleanedPixelCount(cleaningLayers.STAIN)
 	pixelStatus[cleaningLayers.RUBBER].y = _getCleanedPixelCount(cleaningLayers.RUBBER)
 	pixelStatus[cleaningLayers.WAX].y = _getCleanedPixelCount(cleaningLayers.WAX)
 	
 	pixelAmount = DustSprite.get_width() * DustSprite.get_height();	
-	eraserTransform = EraserSprite.transform
-	BrushSizeVSlider.value = 20
-	_on_brush_size_v_slider_value_changed(BrushSizeVSlider.value)
+	eraserTransform = ToolDustSprite.transform #backup of the original transform for scaling relative to original size
+	_on_cleaning_technique_selected(cleaningLayers.DUST)
 
 func _process(delta: float) -> void:
-	EraserSprite.position = get_viewport().get_mouse_position() - Vector2(EraserSprite.get_rect().get_center())
-			
+	selectedToolSprite.position = get_viewport().get_mouse_position() - Vector2(ToolDustSprite.get_rect().get_center())
+
 	if isCleaning:
 		debugLabel.text = "cleaning "+str(cleaningLayers.keys()[currentCleaningLayer])
 		var cleanPosWorld = get_viewport().get_mouse_position()
 		var cleanPosBook = cleanPosWorld - Book.position + (Book.get_rect().size/2)
-		_cleanAtCoords(cleanPosBook)
+		_cleanAtCoords(delta, cleanPosBook)
 	else:
 		debugLabel.text="idle"
 
 
-func _cleanAtCoords(coords: Vector2) -> void:
+func _cleanAtCoords(delta: float, coords: Vector2) -> void:
 	# selecting correct texture to work on
 	var imageToProcess: Image
 	match currentCleaningLayer:
 		cleaningLayers.DUST:
 			imageToProcess = DustSprite
+
+			_cleanCircular(imageToProcess, coords, ToolDustSize, ToolDustStrength * delta)
+			var sprite:  ImageTexture = ImageTexture.create_from_image(imageToProcess)
+			Book.material.set_shader_parameter("DustTexture", sprite)
+			
 		cleaningLayers.STAIN:
 			imageToProcess = StainSprite
+			_cleanCircular(imageToProcess, coords, ToolStainSize, ToolStainStrength * delta)
+			var sprite:  ImageTexture = ImageTexture.create_from_image(imageToProcess)
+			Book.material.set_shader_parameter("StainTexture", sprite)
+			
 		cleaningLayers.RUBBER:
 			imageToProcess = RubberSprite
+			_cleanCircular(imageToProcess, coords, ToolRubberSize, ToolRubberStrength * delta)
+			var sprite:  ImageTexture = ImageTexture.create_from_image(imageToProcess)
+			Book.material.set_shader_parameter("RubberTexture", sprite)
+
 		cleaningLayers.WAX:
 			imageToProcess = WaxSprite
+			_cleanCircular(imageToProcess, coords, ToolWaxSize, ToolWaxStrength * delta)
+			var sprite:  ImageTexture = ImageTexture.create_from_image(imageToProcess)
+			Book.material.set_shader_parameter("WaxTexture", sprite)
+
 		_:
 			print("Broken cleaning Layer selection")
-			pass
-
-
-	# cleaning on current layer if allowed?
-	for y in range(coords.y-cleanPixelSize, coords.y+cleanPixelSize):
-		if y < 0 or y > imageToProcess.get_height()-1:
-			continue
-		for x in range(coords.x - cleanPixelSize, coords.x + cleanPixelSize):
-			if x < 0 or x > imageToProcess.get_width()-1:
-				continue
-			imageToProcess.set_pixel(x, y, Color.TRANSPARENT)
-			
-	var sprite:  ImageTexture = ImageTexture.create_from_image(imageToProcess)
-	
+			pass # quit when unknown tool selected
+	# updating UI	
 	pixelStatus[currentCleaningLayer].x = _getCleanedPixelCount(currentCleaningLayer)
 	_updateProgress()
+
 	
-	# sending modified image to shader
-	match currentCleaningLayer:
-		cleaningLayers.DUST:
-			Book.material.set_shader_parameter("DustTexture", sprite)
-		cleaningLayers.STAIN:
-			Book.material.set_shader_parameter("StainTexture", sprite)
-		cleaningLayers.RUBBER:
-			Book.material.set_shader_parameter("RubberTexture", sprite)
-		cleaningLayers.WAX:
-			Book.material.set_shader_parameter("WaxTexture", sprite)
-	
-func _updateProgress() -> void: # updates the progressbar to the current value of the cleaning progress of a specific cleaning layer
+func _updateProgress() -> void: ## updates all progress bars to the current value of the cleaning progress
 	DustCompletionProgressBar.value = 100.0 / (pixelAmount-pixelStatus[cleaningLayers.DUST].y) * (pixelStatus[cleaningLayers.DUST].x - pixelStatus[cleaningLayers.DUST].y)
 	StainCompletionProgressBar.value = 100.0 / (pixelAmount-pixelStatus[cleaningLayers.STAIN].y) * (pixelStatus[cleaningLayers.STAIN].x - pixelStatus[cleaningLayers.STAIN].y)
 	RubberCompletionProgressBar.value = 100.0 / (pixelAmount-pixelStatus[cleaningLayers.RUBBER].y) * (pixelStatus[cleaningLayers.RUBBER].x - pixelStatus[cleaningLayers.RUBBER].y)
 	WaxCompletionProgressBar.value = 100.0 / (pixelAmount-pixelStatus[cleaningLayers.WAX].y) * (pixelStatus[cleaningLayers.WAX].x - pixelStatus[cleaningLayers.WAX].y) # needs inversion since we want WAX everywhere
-	#CompletionProgressBar.value = 100.0 / (pixelAmount-pixelAlreadyClean) * (getCleanedPixelCount() - pixelAlreadyClean) # old calc
- 
 
 
 func _input(event: InputEvent):
@@ -122,9 +126,9 @@ func _input(event: InputEvent):
 			isCleaning = true
 		if event.is_released():
 			isCleaning = false
-		
-func _getCleanedPixelCount(layerToCount: cleaningLayers) -> int:
 
+
+func _getCleanedPixelCount(layerToCount: cleaningLayers) -> int:
 	# selecting the image to process
 	var imageToCount: Image
 	match layerToCount:
@@ -137,8 +141,6 @@ func _getCleanedPixelCount(layerToCount: cleaningLayers) -> int:
 		cleaningLayers.WAX:
 			imageToCount = WaxSprite
 
-
-
 	var cleanPixel : int = 0
 	for y in imageToCount.get_height()-1:
 		for x in imageToCount.get_width()-1:
@@ -146,12 +148,44 @@ func _getCleanedPixelCount(layerToCount: cleaningLayers) -> int:
 				cleanPixel+=1
 	return cleanPixel
 
-func _on_brush_size_v_slider_value_changed(value: float) -> void:
-	cleanPixelSize = int(value)
-	EraserSprite.transform = eraserTransform.scaled_local(Vector2(value / 50, value / 50))
+
+func _cleanCircular(imageToClean: Image, coords: Vector2i, radius: int, strength: float):
+	var r2: int = radius * radius
+	
+	for y in range(coords.y-radius, coords.y+radius):
+		if y < 0 or y > imageToClean.get_height()-1: # skip if out of image bounds
+			continue
+		for x in range(coords.x - radius, coords.x + radius):
+			if x < 0 or x > imageToClean.get_width()-1: # skip if out of image bounds
+				continue
+				
+			# check if within distance of center point
+			
+			var dotX: int = x - coords.x
+			var dotY: int = y - coords.y
+			if dotX * dotX + dotY*dotY <= r2:
+				var currentPixel: Color = imageToClean.get_pixel(x,y)
+				currentPixel.a= max(0, currentPixel.a - strength)
+				imageToClean.set_pixel(x, y, currentPixel)
 
 
 func _on_cleaning_technique_selected(index: int) -> void:
 	currentCleaningLayer = index
+	ToolDustSprite.visible = false
+	ToolRubberSprite.visible = false
+	ToolStainSprite.visible = false
+	ToolWaxSprite.visible = false
+	match currentCleaningLayer:
+		cleaningLayers.DUST:
+			selectedToolSprite = ToolDustSprite
+		cleaningLayers.STAIN:
+			selectedToolSprite = ToolStainSprite
+		cleaningLayers.RUBBER:
+			selectedToolSprite = ToolRubberSprite
+		cleaningLayers.WAX:
+			selectedToolSprite = ToolWaxSprite
+		_:
+			print("unknown tool selected")
+			pass
+	selectedToolSprite.visible = true
 	isCleaning = false
-	pass # Replace with function body.
