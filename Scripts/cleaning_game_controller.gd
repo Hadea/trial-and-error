@@ -19,7 +19,7 @@ extends Node2D
 @export var ToolRubberSprite: Sprite2D
 @export var ToolRubberStrength: float ## alpha change per second on the rubber layer
 @export var ToolRubberSize: int ## radius in pixel affected by cleaning
-@export var ToolRubberGradient: bool ## if set to true, a linear gradient will be used
+@export var ToolRubberGradient: bool ## ignored if set to true, a linear gradient will be used
 @export var RubberSprite: Image
 @export var RubberCompletionProgressBar: ProgressBar
 @export_group("Wax Adder Properties")
@@ -33,6 +33,7 @@ extends Node2D
 @export_group("")
 @export var Book: Sprite2D
 @export var debugLabel: Label
+@export var debugUncleanedLabel: Label
 
 # internal data
 var isCleaning: bool = false
@@ -71,9 +72,9 @@ func _process(delta: float) -> void:
 	selectedToolSprite.position = get_viewport().get_mouse_position() - Vector2(ToolDustSprite.get_rect().get_center())
 
 	if isCleaning:
-		debugLabel.text = "cleaning "+str(cleaningLayers.keys()[currentCleaningLayer])
 		var cleanPosWorld = get_viewport().get_mouse_position()
 		var cleanPosBook = cleanPosWorld - Book.position + (Book.get_rect().size/2)
+		debugLabel.text = "cleaning "+str(cleaningLayers.keys()[currentCleaningLayer])
 		_cleanAtCoords(delta, cleanPosBook)
 	else:
 		debugLabel.text="idle"
@@ -81,32 +82,104 @@ func _process(delta: float) -> void:
 
 func _cleanAtCoords(delta: float, coords: Vector2) -> void:
 	# selecting correct texture to work on
-	var imageToProcess: Image
 	match currentCleaningLayer:
 		cleaningLayers.DUST:
-			imageToProcess = DustSprite
-
-			_cleanCircular(imageToProcess, coords, ToolDustSize, ToolDustStrength * delta, ToolDustGradient)
-			var sprite:  ImageTexture = ImageTexture.create_from_image(imageToProcess)
-			Book.material.set_shader_parameter("DustTexture", sprite)
+			var r2: int = ToolDustSize * ToolDustSize
+			var toolStrengthPerFrame = ToolDustStrength * delta
+	
+			for y in range(coords.y-ToolDustSize, coords.y+ToolDustSize):
+				if y < 0 or y > DustSprite.get_height()-1: # skip if out of image bounds
+					continue
+				for x in range(coords.x - ToolDustSize, coords.x + ToolDustSize):
+					if x < 0 or x > DustSprite.get_width()-1: # skip if out of image bounds
+						continue
+						
+					# check if within distance of center point
+					
+					var dotX: int = x - int(coords.x)
+					var dotY: int = y - int(coords.y)
+					var distance2: int = dotX * dotX + dotY * dotY 
+					if distance2 <= r2:
+						var currentPixel: Color = DustSprite.get_pixel(x,y)
+						if ToolDustGradient:
+							currentPixel.a= max(0, currentPixel.a - toolStrengthPerFrame * (r2 / max(distance2,0.01)))
+						else:
+							currentPixel.a= max(0, currentPixel.a - toolStrengthPerFrame)
+						DustSprite.set_pixel(x, y, currentPixel)
+			# cleaning finished. Sending new image to shader
+			Book.material.set_shader_parameter("DustTexture", ImageTexture.create_from_image(DustSprite))
 			
 		cleaningLayers.STAIN:
-			imageToProcess = StainSprite
-			_cleanCircular(imageToProcess, coords, ToolStainSize, ToolStainStrength * delta, ToolStainGradient)
-			var sprite:  ImageTexture = ImageTexture.create_from_image(imageToProcess)
-			Book.material.set_shader_parameter("StainTexture", sprite)
+			var r2: int = ToolStainSize * ToolStainSize
+			var toolStrengthPerFrame = ToolStainStrength * delta
+	
+			for y in range(coords.y-ToolStainSize, coords.y+ToolStainSize):
+				if y < 0 or y > StainSprite.get_height()-1: # skip if out of image bounds
+					continue
+				for x in range(coords.x - ToolStainSize, coords.x + ToolStainSize):
+					if x < 0 or x > StainSprite.get_width()-1: # skip if out of image bounds
+						continue
+					if DustSprite.get_pixel(x,y).a > 0: continue
+					# check if within distance of center point
+					
+					var dotX: int = x - int(coords.x)
+					var dotY: int = y - int(coords.y)
+					var distance2: int = dotX * dotX + dotY * dotY 
+					if distance2 <= r2:
+						var currentPixel: Color = StainSprite.get_pixel(x,y)
+						if ToolStainGradient:
+							currentPixel.a= max(0, currentPixel.a - toolStrengthPerFrame * (r2 / max(distance2,0.01)))
+						else:
+							currentPixel.a= max(0, currentPixel.a - toolStrengthPerFrame)
+						
+						StainSprite.set_pixel(x, y, currentPixel)
+			# cleaning finished. Sending new image to shader
+			Book.material.set_shader_parameter("StainTexture",  ImageTexture.create_from_image(StainSprite))
 			
 		cleaningLayers.RUBBER:
-			imageToProcess = RubberSprite
-			_cleanCircular(imageToProcess, coords, ToolRubberSize, ToolRubberStrength * delta, ToolRubberGradient)
-			var sprite:  ImageTexture = ImageTexture.create_from_image(imageToProcess)
-			Book.material.set_shader_parameter("RubberTexture", sprite)
+			var toolStrengthPerFrame = ToolRubberStrength * delta
+	
+			for y in range(coords.y-ToolRubberSize, coords.y+ToolRubberSize):
+				if y < 0 or y > RubberSprite.get_height()-1: # skip if out of image bounds
+					continue
+				for x in range(coords.x - ToolRubberSize, coords.x + ToolRubberSize):
+					if x < 0 or x > RubberSprite.get_width()-1: # skip if out of image bounds
+						continue
+						
+					var currentPixel: Color = RubberSprite.get_pixel(x,y)
+					currentPixel.a= max(0, currentPixel.a - toolStrengthPerFrame)
+					
+					RubberSprite.set_pixel(x, y, currentPixel)
+			# cleaning finished. Sending new image to shader
+			Book.material.set_shader_parameter("RubberTexture",  ImageTexture.create_from_image(RubberSprite))
 
 		cleaningLayers.WAX:
-			imageToProcess = WaxSprite
-			_cleanCircular(imageToProcess, coords, ToolWaxSize, ToolWaxStrength * delta, ToolWaxGradient)
-			var sprite:  ImageTexture = ImageTexture.create_from_image(imageToProcess)
-			Book.material.set_shader_parameter("WaxTexture", sprite)
+			
+			var r2: int = ToolWaxSize * ToolWaxSize
+			var toolStrengthPerFrame = ToolWaxStrength * delta
+	
+			for y in range(coords.y-ToolWaxSize, coords.y+ToolWaxSize):
+				if y < 0 or y > WaxSprite.get_height()-1: # skip if out of image bounds
+					continue
+				for x in range(coords.x - ToolWaxSize, coords.x + ToolWaxSize):
+					if x < 0 or x > WaxSprite.get_width()-1: # skip if out of image bounds
+						continue
+						
+					# check if within distance of center point
+					
+					var dotX: int = x - int(coords.x)
+					var dotY: int = y - int(coords.y)
+					var distance2: int = dotX * dotX + dotY * dotY 
+					if distance2 <= r2:
+						var currentPixel: Color = WaxColor
+						if ToolWaxGradient:
+							currentPixel.a= max(0, currentPixel.a - toolStrengthPerFrame * (r2 / max(distance2,0.01)))
+						else:
+							currentPixel.a= max(0, currentPixel.a - toolStrengthPerFrame)
+						
+						WaxSprite.set_pixel(x, y, currentPixel)
+			# cleaning finished. Sending new image to shader
+			Book.material.set_shader_parameter("WaxTexture", ImageTexture.create_from_image(WaxSprite))
 
 		_:
 			print("Broken cleaning Layer selection")
@@ -148,10 +221,10 @@ func _getCleanedPixelCount(layerToCount: cleaningLayers) -> int:
 			imageToCount = WaxSprite
 
 	var cleanPixel : int = 0
-	for y in imageToCount.get_height()-1:
-		for x in imageToCount.get_width()-1:
+	for y in range(0, imageToCount.get_height()):
+		for x in range(0, imageToCount.get_width()):
 			if layerToCount == cleaningLayers.WAX:
-				if imageToCount.get_pixel(x,y) == WaxColor:
+				if imageToCount.get_pixel(x,y).a == WaxColor.a:
 					cleanPixel+=1
 			else:
 				if imageToCount.get_pixel(x,y).a == 0:
@@ -207,3 +280,68 @@ func _on_cleaning_technique_selected(index: cleaningLayers) -> void:
 			pass
 	selectedToolSprite.visible = true
 	isCleaning = false
+
+
+func _on_debug_uncleaned_button() -> void:
+	var counter: int = 0
+	debugUncleanedLabel.text = str(pixelStatus[currentCleaningLayer]) + "\n" + str(DustSprite.get_width()*DustSprite.get_height()) + "\n"
+	match currentCleaningLayer:
+		cleaningLayers.DUST:
+			for y in range(0, DustSprite.get_height()):
+				for x in range(0, DustSprite.get_width()):
+					if DustSprite.get_pixel(x,y).a > 0.0:
+						DustSprite.set_pixel(x,y,Color.DEEP_PINK)
+						counter+=1
+			Book.material.set_shader_parameter("DustTexture", ImageTexture.create_from_image(DustSprite))
+		cleaningLayers.STAIN:
+			for y in range(0, StainSprite.get_height()):
+				for x in range(0, StainSprite.get_width()):
+					if StainSprite.get_pixel(x,y).a > 0.0:
+						StainSprite.set_pixel(x,y,Color.DEEP_PINK)
+						counter+=1
+			Book.material.set_shader_parameter("StainTexture", ImageTexture.create_from_image(StainSprite))
+		cleaningLayers.RUBBER:
+			for y in range(0, RubberSprite.get_height()):
+				for x in range(0, RubberSprite.get_width()):
+					if RubberSprite.get_pixel(x,y).a > 0.0:
+						RubberSprite.set_pixel(x,y,Color.DEEP_PINK)
+						counter+=1
+			Book.material.set_shader_parameter("RubberTexture", ImageTexture.create_from_image(RubberSprite))
+		cleaningLayers.WAX:
+			for y in range(0, WaxSprite.get_height()):
+				for x in range(0, WaxSprite.get_width()):
+					if WaxSprite.get_pixel(x,y).a > 0.0: 
+						WaxSprite.set_pixel(x,y,Color.DEEP_PINK)
+						counter+=1
+			Book.material.set_shader_parameter("WaxTexture", ImageTexture.create_from_image(WaxSprite))
+	debugUncleanedLabel.text += str(counter)
+
+
+func _on_debug_pixel_count_button() -> void:
+	var pixelCount: int = 0
+	var pixelCountClean: int = 0
+	var pixelCountDitry: int = 0
+	var pixelCountCalculated: int = 0
+	
+	match currentCleaningLayer:
+		cleaningLayers.DUST:
+			for y in range(0, DustSprite.get_height()):
+				for x in range(0, DustSprite.get_width()):
+					if DustSprite.get_pixel(x,y).a == 0:
+						pixelCountClean+=1
+					else:
+						pixelCountDitry+=1
+					pixelCount+=1
+			pixelCountCalculated = DustSprite.get_height() * DustSprite.get_width()
+		cleaningLayers.WAX:
+			for y in range(0, WaxSprite.get_height()):
+				for x in range(0, WaxSprite.get_width()):
+					if WaxSprite.get_pixel(x,y).a > 0.0:
+						pixelCountClean+=1
+					else:
+						pixelCountDitry+=1
+					pixelCount+=1
+			pixelCountCalculated = DustSprite.get_height() * DustSprite.get_width()
+		_:
+			pass # Replace with function body.
+	debugUncleanedLabel.text = "Calc:  " + str(pixelCountCalculated) + "\nCount: " + str(pixelCount) + "\nClean: " + str(pixelCountClean) + "\nDirty: " + str(pixelCountDitry)
