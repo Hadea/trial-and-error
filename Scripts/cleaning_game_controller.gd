@@ -42,8 +42,6 @@ var pixelStatus: Array[Vector2i] = [Vector2i(0,0),Vector2i(0,0),Vector2i(0,0),Ve
 var pixelAmount: int = 0
 var selectedToolSprite: Sprite2D
 var WaxSprite: Image ## buffer for waxing. fully transparent and filled with wax tool
-
-
 enum cleaningLayers {DUST, STAIN, RUBBER, WAX}
 var currentCleaningLayer: cleaningLayers = cleaningLayers.DUST
 
@@ -193,7 +191,7 @@ func _updateProgress() -> void: ## updates all progress bars to the current valu
 	DustCompletionProgressBar.value = 100.0 / (pixelAmount-pixelStatus[cleaningLayers.DUST].y) * (pixelStatus[cleaningLayers.DUST].x - pixelStatus[cleaningLayers.DUST].y)
 	StainCompletionProgressBar.value = 100.0 / (pixelAmount-pixelStatus[cleaningLayers.STAIN].y) * (pixelStatus[cleaningLayers.STAIN].x - pixelStatus[cleaningLayers.STAIN].y)
 	RubberCompletionProgressBar.value = 100.0 / (pixelAmount-pixelStatus[cleaningLayers.RUBBER].y) * (pixelStatus[cleaningLayers.RUBBER].x - pixelStatus[cleaningLayers.RUBBER].y)
-	WaxCompletionProgressBar.value = 100.0 / (pixelAmount-pixelStatus[cleaningLayers.WAX].y) * (pixelStatus[cleaningLayers.WAX].x - pixelStatus[cleaningLayers.WAX].y) # needs inversion since we want WAX everywhere
+	WaxCompletionProgressBar.value = 100.0 / pixelAmount * pixelStatus[cleaningLayers.WAX].x
 
 
 func _input(event: InputEvent):
@@ -224,7 +222,7 @@ func _getCleanedPixelCount(layerToCount: cleaningLayers) -> int:
 	for y in range(0, imageToCount.get_height()):
 		for x in range(0, imageToCount.get_width()):
 			if layerToCount == cleaningLayers.WAX:
-				if imageToCount.get_pixel(x,y).a == WaxColor.a:
+				if imageToCount.get_pixel(x,y).a > 0.0:
 					cleanPixel+=1
 			else:
 				if imageToCount.get_pixel(x,y).a == 0:
@@ -310,7 +308,7 @@ func _on_debug_uncleaned_button() -> void:
 		cleaningLayers.WAX:
 			for y in range(0, WaxSprite.get_height()):
 				for x in range(0, WaxSprite.get_width()):
-					if WaxSprite.get_pixel(x,y).a > 0.0: 
+					if WaxSprite.get_pixel(x,y).a == 0.0: 
 						WaxSprite.set_pixel(x,y,Color.DEEP_PINK)
 						counter+=1
 			Book.material.set_shader_parameter("WaxTexture", ImageTexture.create_from_image(WaxSprite))
