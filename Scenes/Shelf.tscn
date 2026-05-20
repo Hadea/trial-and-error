@@ -1,0 +1,33 @@
+[gd_scene format=3 uid="uid://cw1mt0v42y5iu"]
+
+[ext_resource type="Script" uid="uid://ciaopx7oa0n7w" path="res://Scripts/shelf.gd" id="1_x3wpo"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_i2jh0"]
+
+[node name="Shelf" type="StaticBody2D" unique_id=1663928284]
+script = ExtResource("1_x3wpo")
+
+[node name="NavigationTargetNode2D" type="Node2D" parent="." unique_id=41588385]
+position = Vector2(0, 19)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=500659406 groups=["navmesh"]]
+scale = Vector2(3, 1)
+shape = SubResource("RectangleShape2D_i2jh0")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=2103284474 groups=["navmesh"]]
+offset_left = -30.0
+offset_top = -10.0
+offset_right = 30.0
+offset_bottom = 10.0
+color = Color(0.8440317, 0.7408798, 0.24076664, 1)
+
+[node name="Label" type="Label" parent="." unique_id=1433751993 groups=["navmesh"]]
+offset_left = -30.0
+offset_top = -10.0
+offset_right = 18.0
+offset_bottom = 13.0
+scale = Vector2(1.2487732, 0.8691772)
+theme_override_font_sizes/font_size = 13
+text = "Books"
+horizontal_alignment = 1
+vertical_alignment = 1

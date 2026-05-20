@@ -50,7 +50,11 @@ size_flags_vertical = 4
 layout_mode = 2
 alignment = 1
 
-[node name="CleaningGameButton" type="Button" parent="AspectRatioContainer/Panel/LayoutVBoxContainer/MarginContainer/MenuVBoxContainer" unique_id=1012177419]
+[node name="NavigationGameButton" type="Button" parent="AspectRatioContainer/Panel/LayoutVBoxContainer/MarginContainer/MenuVBoxContainer" unique_id=1012177419]
+layout_mode = 2
+text = "Navigation Game"
+
+[node name="CleaningGameButton" type="Button" parent="AspectRatioContainer/Panel/LayoutVBoxContainer/MarginContainer/MenuVBoxContainer" unique_id=1110496140]
 layout_mode = 2
 text = "Cleaning Game"
 
@@ -67,6 +71,7 @@ text = "Options"
 layout_mode = 2
 text = "Exit"
 
+[connection signal="pressed" from="AspectRatioContainer/Panel/LayoutVBoxContainer/MarginContainer/MenuVBoxContainer/NavigationGameButton" to="." method="_on_navigation_game_button"]
 [connection signal="button_up" from="AspectRatioContainer/Panel/LayoutVBoxContainer/MarginContainer/MenuVBoxContainer/CleaningGameButton" to="." method="_on_cleaning_game_button"]
 [connection signal="button_up" from="AspectRatioContainer/Panel/LayoutVBoxContainer/MarginContainer/MenuVBoxContainer/LoadGameButton" to="." method="_on_load_game_button"]
 [connection signal="button_up" from="AspectRatioContainer/Panel/LayoutVBoxContainer/MarginContainer/MenuVBoxContainer/OptionsButton" to="." method="_on_options_button"]
