@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://d2a85e8n44pas"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_nkglm"]
+size = Vector2(80, 20)
+
+[node name="Wall" type="StaticBody2D" unique_id=1569636482]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1670334508 groups=["navmesh"]]
+shape = SubResource("RectangleShape2D_nkglm")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=898583398]
+offset_left = -40.0
+offset_top = -10.0
+offset_right = 40.0
+offset_bottom = 10.0
+color = Color(0.5689727, 0.56897277, 0.5689727, 1)
