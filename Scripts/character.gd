@@ -22,6 +22,15 @@ func _ready() -> void:
 	if !navigationAgent:
 		print_debug("no nav agent found")
 
+
+func ReevaluateTarget():
+	if navigationAgent.is_target_reachable():
+		return # still reachable, nothing to do
+	else:
+		# resetting the character to search for a new target
+		CurrentCharacterStatus = Constants.CharacterStatus.Idle
+		timeToNextStatus = 0.0
+
 func _physics_process(delta: float) -> void:
 	timeToNextStatus -= delta
 	if timeToNextStatus <= 0.0:
@@ -62,10 +71,9 @@ func _physics_process(delta: float) -> void:
 					if !navigationAgent.is_target_reachable():
 						# Exit not reachable
 						print_debug("Exit is not reachable")
-						CurrentCharacterStatus = Constants.CharacterStatus.Idle
-						timeToNextStatus = 1.0
+						CharacterSpawner.KillCharacter(self)
 					else:
-						# walking towards the target until reached
+						# walking towards the exit until reached
 						transform.origin = global_position.move_toward(navigationAgent.get_next_path_position(), WalkingSpeed*delta)
 				
 			Constants.CharacterStatus.NoTarget:
