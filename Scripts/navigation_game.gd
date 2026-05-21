@@ -4,7 +4,7 @@ extends Node2D
 @export var CharacterSpawner: Array[Node2D]
 @export var DebugLabel: Label
 @export var WallCursor: Node2D
-
+var wallRotation: bool = false
 
 func _ready() -> void:
 	for subNode in get_children():
@@ -16,25 +16,32 @@ func _ready() -> void:
 
 
 func _process(_delta: float) -> void:
-	DebugLabel.text = "Current Player\n"
+	DebugLabel.text = "Mouse: " + str(floor(get_viewport().get_mouse_position()))
+	DebugLabel.text += "\nRotated Wall: " + str(wallRotation) + " " + str(WallCursor.rotation_degrees)
+	DebugLabel.text += "\nCurrent Players\n"
 	for spawner in CharacterSpawner:
 		for character in spawner.CharacterArray:
 			DebugLabel.text += str(floor(character.transform.origin)) + " " + str(Constants.CharacterStatus.keys()[character.CurrentCharacterStatus]) + "\n"
 	WallCursor.global_position = get_viewport().get_mouse_position()
+	
 
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventKey and event.pressed and event.keycode == KEY_ESCAPE:
 		get_tree().change_scene_to_file("res://Scenes/MainMenuUI.tscn")
-	if event is InputEventMouseButton:
+	if event is InputEventMouseButton and event.is_pressed():
 		if event.button_index == MOUSE_BUTTON_LEFT:
-			if event.is_pressed():
-				var newWall: Node2D = preload("res://Scenes/Wall.tscn").instantiate() as Node2D
-				newWall.transform.origin = get_viewport().get_mouse_position()
-				add_child(newWall)
-				newWall.add_to_group("navmesh") # groups are not saved in scene
-				$NavigationRegion2D.bake_navigation_polygon(false) #shit performance
-				# place horizontal
+			# place horizontal
+			var newWall: Node2D = preload("res://Scenes/Wall.tscn").instantiate() as Node2D
+			newWall.transform.origin = get_viewport().get_mouse_position()
+			add_child(newWall)
+			newWall.rotation_degrees = 90*int(wallRotation)
+			newWall.add_to_group("navmesh") # groups are not saved in scene
+			$NavigationRegion2D.bake_navigation_polygon(false) #shit performance
+		if event.button_index == MOUSE_BUTTON_RIGHT and event.is_pressed():
+			# rotate
+			wallRotation = !wallRotation #flipping the bool
+			WallCursor.rotation_degrees = 90*int(wallRotation)
 
 
 func _on_timer_timeout() -> void: ## If Timer has reached end and spawns a character
