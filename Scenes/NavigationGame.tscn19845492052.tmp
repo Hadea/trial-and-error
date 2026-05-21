@@ -1,0 +1,71 @@
+[gd_scene format=3 uid="uid://dodum5heehwb0"]
+
+[ext_resource type="Script" uid="uid://bntkyv6qtnny4" path="res://Scripts/navigation_game.gd" id="1_d8kjo"]
+[ext_resource type="Script" uid="uid://b616ku4ckwcwd" path="res://Scripts/CharacterSpawner.gd" id="2_d8kjo"]
+[ext_resource type="PackedScene" uid="uid://cw1mt0v42y5iu" path="res://Scenes/Shelf.tscn" id="3_fso3y"]
+[ext_resource type="PackedScene" uid="uid://d2a85e8n44pas" path="res://Scenes/Wall.tscn" id="4_qssnu"]
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_fso3y"]
+vertices = PackedVector2Array(846, 243, 766, 243, 623, 234, 623, 194, 257.03906, 615.02344, 677, 323, 766, 283, 846, 283, 1113, 616.96875, 1113, 24.960938, 259.95313, 22.03125, 597, 323, 677, 283, 543, 234, 378, 282, 378, 242, 597, 283, 298, 282, 298, 242, 543, 194)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3), PackedInt32Array(4, 5, 6, 7, 8), PackedInt32Array(7, 0, 9, 8), PackedInt32Array(10, 9, 0, 3), PackedInt32Array(11, 5, 4), PackedInt32Array(6, 5, 12), PackedInt32Array(13, 2, 1, 6, 12, 14, 15), PackedInt32Array(14, 12, 16), PackedInt32Array(14, 16, 11, 4, 17), PackedInt32Array(17, 4, 10, 18), PackedInt32Array(10, 3, 19), PackedInt32Array(15, 18, 10, 19, 13)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(250, 12, 247, 625, 1123, 627, 1123, 15)])
+source_geometry_mode = 2
+source_geometry_group_name = &"navmesh"
+
+[node name="NavigationGame" type="Node2D" unique_id=1436794494 node_paths=PackedStringArray("DebugLabel", "WallCursor")]
+script = ExtResource("1_d8kjo")
+NavigationTargetArray = null
+DebugLabel = NodePath("Panel/VBoxContainer/DebugLabel")
+WallCursor = NodePath("Wall")
+
+[node name="NavigationRegion2D" type="NavigationRegion2D" parent="." unique_id=1374353470]
+position = Vector2(1, 1)
+navigation_polygon = SubResource("NavigationPolygon_fso3y")
+
+[node name="SpawnerNode2D" type="Node2D" parent="." unique_id=968408315]
+position = Vector2(565, 590)
+script = ExtResource("2_d8kjo")
+
+[node name="SpawnerNode2D2" type="Node2D" parent="." unique_id=775728811]
+position = Vector2(738, 590)
+script = ExtResource("2_d8kjo")
+
+[node name="Timer" type="Timer" parent="." unique_id=827356843]
+wait_time = 3.0
+autostart = true
+
+[node name="Shelf" parent="." unique_id=266150103 groups=["navmesh"] instance=ExtResource("3_fso3y")]
+position = Vector2(638, 304)
+
+[node name="Shelf2" parent="." unique_id=831978332 groups=["navmesh"] instance=ExtResource("3_fso3y")]
+position = Vector2(584, 215)
+
+[node name="Shelf3" parent="." unique_id=2115099383 groups=["navmesh"] instance=ExtResource("3_fso3y")]
+position = Vector2(339, 263)
+
+[node name="Shelf4" parent="." unique_id=1854893631 groups=["navmesh"] instance=ExtResource("3_fso3y")]
+position = Vector2(807, 264)
+
+[node name="Panel" type="Panel" parent="." unique_id=2018666223]
+offset_left = 33.0
+offset_top = 25.0
+offset_right = 233.0
+offset_bottom = 625.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel" unique_id=1482108789]
+layout_mode = 0
+offset_right = 200.0
+offset_bottom = 600.0
+
+[node name="DebugKillAllButton" type="Button" parent="Panel/VBoxContainer" unique_id=2129938595]
+layout_mode = 2
+text = "Kill All"
+
+[node name="DebugLabel" type="Label" parent="Panel/VBoxContainer" unique_id=1130709973]
+layout_mode = 2
+text = "DebugLabel"
+
+[node name="Wall" parent="." unique_id=1569636482 instance=ExtResource("4_qssnu")]
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="pressed" from="Panel/VBoxContainer/DebugKillAllButton" to="." method="_on_debug_kill_all_button"]

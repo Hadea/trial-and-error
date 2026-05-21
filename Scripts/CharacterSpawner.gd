@@ -20,3 +20,8 @@ func KillAll():
 	for charToKill in CharacterArray:
 		charToKill.queue_free()
 	CharacterArray.clear()
+
+
+func NavmeshChanged():
+	for character in CharacterArray:
+		character.ReevaluateTarget()

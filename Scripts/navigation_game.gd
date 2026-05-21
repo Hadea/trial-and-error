@@ -38,6 +38,8 @@ func _input(event: InputEvent) -> void:
 			newWall.rotation_degrees = 90*int(wallRotation)
 			newWall.add_to_group("navmesh") # groups are not saved in scene
 			$NavigationRegion2D.bake_navigation_polygon(false) #shit performance
+			for spawner in CharacterSpawner:
+				spawner.NavmeshChanged()
 		if event.button_index == MOUSE_BUTTON_RIGHT and event.is_pressed():
 			# rotate
 			wallRotation = !wallRotation #flipping the bool
