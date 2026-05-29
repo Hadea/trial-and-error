@@ -65,7 +65,7 @@ debugLabel = NodePath("DebugVBoxContainer/DebugLabel")
 debugUncleanedLabel = NodePath("DebugVBoxContainer/DebugUncleanedLabel")
 
 [node name="BookSprite2D" type="Sprite2D" parent="." unique_id=598197719]
-texture_filter = 1
+texture_filter = 2
 texture_repeat = 1
 material = SubResource("ShaderMaterial_q4put")
 position = Vector2(548, 315)

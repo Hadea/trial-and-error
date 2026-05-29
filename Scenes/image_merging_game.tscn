@@ -1,0 +1,55 @@
+[gd_scene format=3 uid="uid://n23y4xhluvra"]
+
+[ext_resource type="Script" uid="uid://dymmg167vxt5q" path="res://Scripts/image_merging_game.gd" id="1_rwbd8"]
+[ext_resource type="ButtonGroup" uid="uid://rl7smxv422n5" path="res://Ressources/BrushButtonGroup.tres" id="2_csnws"]
+[ext_resource type="Texture2D" uid="uid://dk2n13phlmwl" path="res://Ressources/ImageMergeBackground.png" id="2_gr2dl"]
+[ext_resource type="Texture2D" uid="uid://bjthg5b1lcbjj" path="res://Ressources/ImageMergeBrushA.png" id="3_csnws"]
+[ext_resource type="Texture2D" uid="uid://b85ud1fn3xohe" path="res://Ressources/ImageMergeBrushB.png" id="4_md1gj"]
+
+[node name="ImageMergingGame" type="Node2D" unique_id=340253021 node_paths=PackedStringArray("BackGroundSprite", "BrushA", "BrushB", "ButtonA", "ButtonB", "DebugLabel")]
+script = ExtResource("1_rwbd8")
+BackGroundSprite = NodePath("BackgroundSprite2D")
+BrushA = NodePath("BrushASprite2D")
+BrushB = NodePath("BrushBSprite2D")
+ButtonA = NodePath("VBoxContainer/BrushAButton")
+ButtonB = NodePath("VBoxContainer/BrushBButton")
+BrushButtonGroup = ExtResource("2_csnws")
+DebugLabel = NodePath("VBoxContainer/Label")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=901671623]
+offset_left = 400.0
+offset_right = 469.0
+offset_bottom = 93.0
+
+[node name="BrushAButton" type="Button" parent="VBoxContainer" unique_id=674400666]
+layout_mode = 2
+toggle_mode = true
+button_group = ExtResource("2_csnws")
+text = "Brush A"
+
+[node name="BrushBButton" type="Button" parent="VBoxContainer" unique_id=998258565]
+layout_mode = 2
+toggle_mode = true
+button_group = ExtResource("2_csnws")
+text = "Brush B"
+
+[node name="Label" type="Label" parent="VBoxContainer" unique_id=134564235]
+layout_mode = 2
+text = "debug"
+
+[node name="BookSprite2D" type="Sprite2D" parent="." unique_id=1713360971]
+
+[node name="BackgroundSprite2D" type="Sprite2D" parent="." unique_id=1013395368]
+position = Vector2(164, 122)
+texture = ExtResource("2_gr2dl")
+
+[node name="BrushASprite2D" type="Sprite2D" parent="." unique_id=99602698]
+texture = ExtResource("3_csnws")
+offset = Vector2(2, 1)
+
+[node name="BrushBSprite2D" type="Sprite2D" parent="." unique_id=1801863108]
+texture = ExtResource("4_md1gj")
+offset = Vector2(4, 2)
+
+[connection signal="toggled" from="VBoxContainer/BrushAButton" to="." method="_on_brush_a_button_toggled"]
+[connection signal="toggled" from="VBoxContainer/BrushBButton" to="." method="_on_brush_b_button_toggled"]
