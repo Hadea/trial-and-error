@@ -1,0 +1,6 @@
+[gd_resource type="Theme" format=3 uid="uid://c8kmerovy10td"]
+
+[ext_resource type="FontFile" uid="uid://hiehttah43hc" path="res://Ressources/Blackwood Castle.ttf" id="1_nmser"]
+
+[resource]
+default_font = ExtResource("1_nmser")

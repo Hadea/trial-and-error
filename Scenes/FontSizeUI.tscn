@@ -1,23 +1,33 @@
 [gd_scene format=3 uid="uid://socmpjyjc386"]
 
 [ext_resource type="Script" uid="uid://dcfxx142w1hyd" path="res://Scripts/FontSizeUI.gd" id="1_0h2e2"]
+[ext_resource type="Theme" uid="uid://c8kmerovy10td" path="res://ProjectTheme.tres" id="2_ho8h4"]
+[ext_resource type="FontFile" uid="uid://hiehttah43hc" path="res://Ressources/Blackwood Castle.ttf" id="3_f2uo5"]
+[ext_resource type="ButtonGroup" uid="uid://dr16c66udpvxs" path="res://Ressources/FontButtonGroup.tres" id="4_b1iw3"]
+[ext_resource type="FontFile" uid="uid://cqdcjbka80136" path="res://Ressources/BOOTERFO.ttf" id="5_6ubo7"]
 
-[node name="FontSizeUI" type="Node" unique_id=1716796400 node_paths=PackedStringArray("SizeSelectOptionButton", "SizeSelectLabel")]
+[node name="FontSizeUI" type="Control" unique_id=1762412616 node_paths=PackedStringArray("SizeSelectOptionButton", "SizeSelectLabel")]
+layout_mode = 3
+anchors_preset = 0
 script = ExtResource("1_0h2e2")
 SizeSelectOptionButton = NodePath("AspectRatioContainer/VSplitContainer/SizeSelectOptionButton")
 SizeSelectLabel = NodePath("AspectRatioContainer/VSplitContainer/SizeSelectLabel")
+FontA = ExtResource("3_f2uo5")
+FontB = ExtResource("5_6ubo7")
 
 [node name="AspectRatioContainer" type="AspectRatioContainer" parent="." unique_id=764926726]
+layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
 [node name="VSplitContainer" type="VSplitContainer" parent="AspectRatioContainer" unique_id=1108299179]
 layout_mode = 2
-split_offsets = PackedInt32Array(23)
+split_offsets = PackedInt32Array(23, 0, 0)
 split_offset = 23
 
 [node name="SizeSelectLabel" type="Label" parent="AspectRatioContainer/VSplitContainer" unique_id=221024152]
 layout_mode = 2
+theme = ExtResource("2_ho8h4")
 text = "Hello World, this is Godot"
 
 [node name="SizeSelectOptionButton" type="OptionButton" parent="AspectRatioContainer/VSplitContainer" unique_id=2064598888]
@@ -31,4 +41,20 @@ popup/item_1/id = 1
 popup/item_2/text = "20 (big)"
 popup/item_2/id = 2
 
+[node name="ButtonFontA" type="Button" parent="AspectRatioContainer/VSplitContainer" unique_id=1518987531]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_f2uo5")
+toggle_mode = true
+button_group = ExtResource("4_b1iw3")
+text = "Font A"
+
+[node name="ButtonFontB" type="Button" parent="AspectRatioContainer/VSplitContainer" unique_id=1843227895]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("5_6ubo7")
+toggle_mode = true
+button_group = ExtResource("4_b1iw3")
+text = "Font B"
+
 [connection signal="item_selected" from="AspectRatioContainer/VSplitContainer/SizeSelectOptionButton" to="." method="_on_size_change"]
+[connection signal="toggled" from="AspectRatioContainer/VSplitContainer/ButtonFontA" to="." method="_on_button_font_a_toggled"]
+[connection signal="toggled" from="AspectRatioContainer/VSplitContainer/ButtonFontB" to="." method="_on_button_font_b_toggled"]
