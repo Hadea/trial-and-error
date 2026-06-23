@@ -1,15 +1,14 @@
 [gd_resource type="Theme" format=3 uid="uid://cvcg4sa627dij"]
 
 [ext_resource type="FontFile" uid="uid://cx0kc0j4pbhfs" path="res://Ressources/Xirod.otf" id="1_m7uge"]
-[ext_resource type="FontFile" uid="uid://be3goekn7ngy6" path="res://Ressources/BlackwoodCastleShadow.ttf" id="1_p1hn2"]
-[ext_resource type="FontFile" uid="uid://hiehttah43hc" path="res://Ressources/Blackwood Castle.ttf" id="2_m7uge"]
+[ext_resource type="FontFile" uid="uid://cqdcjbka80136" path="res://Ressources/BOOTERFO.ttf" id="2_p1hn2"]
 
 [resource]
-default_font = ExtResource("2_m7uge")
+default_font = ExtResource("1_m7uge")
 Label/fonts/font = ExtResource("1_m7uge")
 LabelTitle10/font_sizes/font_size = 10
 LabelTitle13/font_sizes/font_size = 13
 LabelTitle16/font_sizes/font_size = 16
 LabelTitle20/font_sizes/font_size = 20
 LabelTitleBW20/font_sizes/font_size = 20
-LabelTitleBW20/fonts/font = ExtResource("1_p1hn2")
+LabelTitleBW20/fonts/font = ExtResource("2_p1hn2")

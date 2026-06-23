@@ -6,7 +6,6 @@
 [ext_resource type="ButtonGroup" uid="uid://dr16c66udpvxs" path="res://Ressources/FontButtonGroup.tres" id="4_b1iw3"]
 [ext_resource type="FontFile" uid="uid://cqdcjbka80136" path="res://Ressources/BOOTERFO.ttf" id="5_6ubo7"]
 [ext_resource type="FontFile" uid="uid://be3goekn7ngy6" path="res://Ressources/BlackwoodCastleShadow.ttf" id="5_dr8l0"]
-[ext_resource type="Theme" uid="uid://cvcg4sa627dij" path="res://ProjectThemeBeta.tres" id="7_6ubo7"]
 
 [node name="FontSizeUI" type="Control" unique_id=1762412616 node_paths=PackedStringArray("SizeSelectOptionButton", "SizeSelectLabel")]
 layout_mode = 3
@@ -75,36 +74,30 @@ text = "Effects"
 
 [node name="SizeSelectLabel" type="Label" parent="AspectRatioContainer/HBoxContainer/VSplitContainer2" unique_id=221024152]
 layout_mode = 2
-theme = ExtResource("7_6ubo7")
 text = "This is the default label with size override"
 
 [node name="Label10px" type="Label" parent="AspectRatioContainer/HBoxContainer/VSplitContainer2" unique_id=1730708078]
 layout_mode = 2
-theme = ExtResource("7_6ubo7")
 theme_type_variation = &"LabelTitle10"
 text = "Label 10 px"
 
 [node name="Label13px" type="Label" parent="AspectRatioContainer/HBoxContainer/VSplitContainer2" unique_id=13139676]
 layout_mode = 2
-theme = ExtResource("7_6ubo7")
 theme_type_variation = &"LabelTitle13"
 text = "Label 13 px"
 
 [node name="Label16px" type="Label" parent="AspectRatioContainer/HBoxContainer/VSplitContainer2" unique_id=1076130068]
 layout_mode = 2
-theme = ExtResource("7_6ubo7")
 theme_type_variation = &"LabelTitle16"
 text = "Label 16 px"
 
 [node name="Label20px" type="Label" parent="AspectRatioContainer/HBoxContainer/VSplitContainer2" unique_id=2085140295]
 layout_mode = 2
-theme = ExtResource("7_6ubo7")
 theme_type_variation = &"LabelTitle20"
 text = "Label 20 px"
 
 [node name="LabelBW20px" type="Label" parent="AspectRatioContainer/HBoxContainer/VSplitContainer2" unique_id=2006493594]
 layout_mode = 2
-theme = ExtResource("7_6ubo7")
 theme_type_variation = &"LabelTitleBW20"
 text = "Label BW 20 px"
 
