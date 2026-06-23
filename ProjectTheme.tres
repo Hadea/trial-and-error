@@ -1,6 +1,18 @@
 [gd_resource type="Theme" format=3 uid="uid://c8kmerovy10td"]
 
+[ext_resource type="FontFile" uid="uid://be3goekn7ngy6" path="res://Ressources/BlackwoodCastleShadow.ttf" id="1_6sb86"]
 [ext_resource type="FontFile" uid="uid://hiehttah43hc" path="res://Ressources/Blackwood Castle.ttf" id="1_nmser"]
 
 [resource]
 default_font = ExtResource("1_nmser")
+LabelTitle10/base_type = &"Label"
+LabelTitle10/font_sizes/font_size = 10
+LabelTitle13/base_type = &"Label"
+LabelTitle13/font_sizes/font_size = 13
+LabelTitle16/base_type = &"Label"
+LabelTitle16/font_sizes/font_size = 16
+LabelTitle20/base_type = &"Label"
+LabelTitle20/font_sizes/font_size = 20
+LabelTitleBW20/base_type = &"Label"
+LabelTitleBW20/font_sizes/font_size = 20
+LabelTitleBW20/fonts/font = ExtResource("1_6sb86")

@@ -1,36 +1,44 @@
 [gd_scene format=3 uid="uid://socmpjyjc386"]
 
 [ext_resource type="Script" uid="uid://dcfxx142w1hyd" path="res://Scripts/FontSizeUI.gd" id="1_0h2e2"]
-[ext_resource type="Theme" uid="uid://c8kmerovy10td" path="res://ProjectTheme.tres" id="2_ho8h4"]
 [ext_resource type="FontFile" uid="uid://hiehttah43hc" path="res://Ressources/Blackwood Castle.ttf" id="3_f2uo5"]
+[ext_resource type="FontFile" uid="uid://cx0kc0j4pbhfs" path="res://Ressources/Xirod.otf" id="4_6ubo7"]
 [ext_resource type="ButtonGroup" uid="uid://dr16c66udpvxs" path="res://Ressources/FontButtonGroup.tres" id="4_b1iw3"]
 [ext_resource type="FontFile" uid="uid://cqdcjbka80136" path="res://Ressources/BOOTERFO.ttf" id="5_6ubo7"]
+[ext_resource type="FontFile" uid="uid://be3goekn7ngy6" path="res://Ressources/BlackwoodCastleShadow.ttf" id="5_dr8l0"]
+[ext_resource type="Theme" uid="uid://cvcg4sa627dij" path="res://ProjectThemeBeta.tres" id="7_6ubo7"]
 
 [node name="FontSizeUI" type="Control" unique_id=1762412616 node_paths=PackedStringArray("SizeSelectOptionButton", "SizeSelectLabel")]
 layout_mode = 3
 anchors_preset = 0
 script = ExtResource("1_0h2e2")
-SizeSelectOptionButton = NodePath("AspectRatioContainer/VSplitContainer/SizeSelectOptionButton")
-SizeSelectLabel = NodePath("AspectRatioContainer/VSplitContainer/SizeSelectLabel")
+SizeSelectOptionButton = NodePath("AspectRatioContainer/HBoxContainer/VSplitContainer/SizeSelectOptionButton")
+SizeSelectLabel = NodePath("AspectRatioContainer/HBoxContainer/VSplitContainer2/SizeSelectLabel")
 FontA = ExtResource("3_f2uo5")
 FontB = ExtResource("5_6ubo7")
+FontC = ExtResource("4_6ubo7")
+FontD = ExtResource("5_dr8l0")
 
 [node name="AspectRatioContainer" type="AspectRatioContainer" parent="." unique_id=764926726]
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_right = 1150.0
+offset_bottom = 650.0
 
-[node name="VSplitContainer" type="VSplitContainer" parent="AspectRatioContainer" unique_id=1108299179]
+[node name="HBoxContainer" type="HBoxContainer" parent="AspectRatioContainer" unique_id=1576531895]
 layout_mode = 2
-split_offsets = PackedInt32Array(23, 0, 0)
-split_offset = 23
 
-[node name="SizeSelectLabel" type="Label" parent="AspectRatioContainer/VSplitContainer" unique_id=221024152]
+[node name="VSplitContainer" type="VSplitContainer" parent="AspectRatioContainer/HBoxContainer" unique_id=1108299179]
 layout_mode = 2
-theme = ExtResource("2_ho8h4")
-text = "Hello World, this is Godot"
+size_flags_horizontal = 3
+size_flags_vertical = 4
+split_offsets = PackedInt32Array(19, 58, 97)
+split_offset = 19
 
-[node name="SizeSelectOptionButton" type="OptionButton" parent="AspectRatioContainer/VSplitContainer" unique_id=2064598888]
+[node name="LabelSettings" type="Label" parent="AspectRatioContainer/HBoxContainer/VSplitContainer" unique_id=1183534607]
+layout_mode = 2
+text = "Settings"
+
+[node name="SizeSelectOptionButton" type="OptionButton" parent="AspectRatioContainer/HBoxContainer/VSplitContainer" unique_id=2064598888]
 layout_mode = 2
 selected = 1
 item_count = 3
@@ -41,20 +49,65 @@ popup/item_1/id = 1
 popup/item_2/text = "20 (big)"
 popup/item_2/id = 2
 
-[node name="ButtonFontA" type="Button" parent="AspectRatioContainer/VSplitContainer" unique_id=1518987531]
+[node name="ButtonFontA" type="Button" parent="AspectRatioContainer/HBoxContainer/VSplitContainer" unique_id=1518987531]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("3_f2uo5")
 toggle_mode = true
 button_group = ExtResource("4_b1iw3")
-text = "Font A"
+text = "Theme Alpha"
 
-[node name="ButtonFontB" type="Button" parent="AspectRatioContainer/VSplitContainer" unique_id=1843227895]
+[node name="ButtonFontB" type="Button" parent="AspectRatioContainer/HBoxContainer/VSplitContainer" unique_id=1843227895]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("5_6ubo7")
 toggle_mode = true
 button_group = ExtResource("4_b1iw3")
-text = "Font B"
+text = "Theme Beta"
 
-[connection signal="item_selected" from="AspectRatioContainer/VSplitContainer/SizeSelectOptionButton" to="." method="_on_size_change"]
-[connection signal="toggled" from="AspectRatioContainer/VSplitContainer/ButtonFontA" to="." method="_on_button_font_a_toggled"]
-[connection signal="toggled" from="AspectRatioContainer/VSplitContainer/ButtonFontB" to="." method="_on_button_font_b_toggled"]
+[node name="VSplitContainer2" type="VSplitContainer" parent="AspectRatioContainer/HBoxContainer" unique_id=1374097592]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+split_offsets = PackedInt32Array(0, 0, 0, 0, 0, 0)
+
+[node name="LabelEffects" type="Label" parent="AspectRatioContainer/HBoxContainer/VSplitContainer2" unique_id=749390442]
+layout_mode = 2
+text = "Effects"
+
+[node name="SizeSelectLabel" type="Label" parent="AspectRatioContainer/HBoxContainer/VSplitContainer2" unique_id=221024152]
+layout_mode = 2
+theme = ExtResource("7_6ubo7")
+text = "This is the default label with size override"
+
+[node name="Label10px" type="Label" parent="AspectRatioContainer/HBoxContainer/VSplitContainer2" unique_id=1730708078]
+layout_mode = 2
+theme = ExtResource("7_6ubo7")
+theme_type_variation = &"LabelTitle10"
+text = "Label 10 px"
+
+[node name="Label13px" type="Label" parent="AspectRatioContainer/HBoxContainer/VSplitContainer2" unique_id=13139676]
+layout_mode = 2
+theme = ExtResource("7_6ubo7")
+theme_type_variation = &"LabelTitle13"
+text = "Label 13 px"
+
+[node name="Label16px" type="Label" parent="AspectRatioContainer/HBoxContainer/VSplitContainer2" unique_id=1076130068]
+layout_mode = 2
+theme = ExtResource("7_6ubo7")
+theme_type_variation = &"LabelTitle16"
+text = "Label 16 px"
+
+[node name="Label20px" type="Label" parent="AspectRatioContainer/HBoxContainer/VSplitContainer2" unique_id=2085140295]
+layout_mode = 2
+theme = ExtResource("7_6ubo7")
+theme_type_variation = &"LabelTitle20"
+text = "Label 20 px"
+
+[node name="LabelBW20px" type="Label" parent="AspectRatioContainer/HBoxContainer/VSplitContainer2" unique_id=2006493594]
+layout_mode = 2
+theme = ExtResource("7_6ubo7")
+theme_type_variation = &"LabelTitleBW20"
+text = "Label BW 20 px"
+
+[connection signal="item_selected" from="AspectRatioContainer/HBoxContainer/VSplitContainer/SizeSelectOptionButton" to="." method="_on_size_change"]
+[connection signal="toggled" from="AspectRatioContainer/HBoxContainer/VSplitContainer/ButtonFontA" to="." method="_on_button_font_a_toggled"]
+[connection signal="toggled" from="AspectRatioContainer/HBoxContainer/VSplitContainer/ButtonFontB" to="." method="_on_button_font_b_toggled"]
