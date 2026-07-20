@@ -1,0 +1,558 @@
+[gd_scene format=3 uid="uid://l4evwp1umr8s"]
+
+[ext_resource type="Script" uid="uid://cxo2fucpbyav3" path="res://Scripts/InventoryContainer.gd" id="1_kwdjh"]
+
+[node name="InventoryGame" type="Control" unique_id=2069499776]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=2057453938]
+layout_mode = 0
+offset_left = 133.0
+offset_top = 134.0
+offset_right = 369.0
+offset_bottom = 479.0
+color = Color(0.8089983, 0.8089983, 0.8089982, 1)
+
+[node name="GridContainer" type="GridContainer" parent="ColorRect" unique_id=1789838008]
+layout_mode = 0
+columns = 7
+
+[node name="Panel" type="Panel" parent="ColorRect/GridContainer" unique_id=127743435]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+script = ExtResource("1_kwdjh")
+
+[node name="ColorRect" type="ColorRect" parent="ColorRect/GridContainer/Panel" unique_id=738594207]
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -10.0
+offset_top = -10.0
+offset_right = 10.0
+offset_bottom = 10.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+color = Color(0.2398856, 0.4627601, 1, 1)
+
+[node name="Panel2" type="Panel" parent="ColorRect/GridContainer" unique_id=1288205464]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+script = ExtResource("1_kwdjh")
+
+[node name="Panel3" type="Panel" parent="ColorRect/GridContainer" unique_id=2105724328]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+script = ExtResource("1_kwdjh")
+
+[node name="Panel4" type="Panel" parent="ColorRect/GridContainer" unique_id=648485740]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+script = ExtResource("1_kwdjh")
+
+[node name="Panel5" type="Panel" parent="ColorRect/GridContainer" unique_id=1282619934]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+script = ExtResource("1_kwdjh")
+
+[node name="Panel6" type="Panel" parent="ColorRect/GridContainer" unique_id=880317116]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+script = ExtResource("1_kwdjh")
+
+[node name="Panel7" type="Panel" parent="ColorRect/GridContainer" unique_id=1106463214]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+script = ExtResource("1_kwdjh")
+
+[node name="Panel8" type="Panel" parent="ColorRect/GridContainer" unique_id=1499293204]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+script = ExtResource("1_kwdjh")
+
+[node name="Panel9" type="Panel" parent="ColorRect/GridContainer" unique_id=1606060856]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+script = ExtResource("1_kwdjh")
+
+[node name="Panel10" type="Panel" parent="ColorRect/GridContainer" unique_id=2137140743]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+script = ExtResource("1_kwdjh")
+
+[node name="Panel11" type="Panel" parent="ColorRect/GridContainer" unique_id=1711851209]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+script = ExtResource("1_kwdjh")
+
+[node name="Panel12" type="Panel" parent="ColorRect/GridContainer" unique_id=648827009]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+script = ExtResource("1_kwdjh")
+
+[node name="Panel13" type="Panel" parent="ColorRect/GridContainer" unique_id=1611548366]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+script = ExtResource("1_kwdjh")
+
+[node name="Panel14" type="Panel" parent="ColorRect/GridContainer" unique_id=1647545024]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+script = ExtResource("1_kwdjh")
+
+[node name="Panel15" type="Panel" parent="ColorRect/GridContainer" unique_id=599980097]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+script = ExtResource("1_kwdjh")
+
+[node name="Panel16" type="Panel" parent="ColorRect/GridContainer" unique_id=1814506838]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+script = ExtResource("1_kwdjh")
+
+[node name="Panel17" type="Panel" parent="ColorRect/GridContainer" unique_id=2041821978]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+script = ExtResource("1_kwdjh")
+
+[node name="Panel18" type="Panel" parent="ColorRect/GridContainer" unique_id=1992601051]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+script = ExtResource("1_kwdjh")
+
+[node name="Panel19" type="Panel" parent="ColorRect/GridContainer" unique_id=418917309]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+script = ExtResource("1_kwdjh")
+
+[node name="Panel20" type="Panel" parent="ColorRect/GridContainer" unique_id=760828382]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+script = ExtResource("1_kwdjh")
+
+[node name="Panel21" type="Panel" parent="ColorRect/GridContainer" unique_id=707034537]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+script = ExtResource("1_kwdjh")
+
+[node name="Panel22" type="Panel" parent="ColorRect/GridContainer" unique_id=640442014]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+script = ExtResource("1_kwdjh")
+
+[node name="Panel23" type="Panel" parent="ColorRect/GridContainer" unique_id=1329727667]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+script = ExtResource("1_kwdjh")
+
+[node name="Panel24" type="Panel" parent="ColorRect/GridContainer" unique_id=926617448]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+script = ExtResource("1_kwdjh")
+
+[node name="Panel25" type="Panel" parent="ColorRect/GridContainer" unique_id=589481359]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+script = ExtResource("1_kwdjh")
+
+[node name="Panel26" type="Panel" parent="ColorRect/GridContainer" unique_id=34209504]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+script = ExtResource("1_kwdjh")
+
+[node name="Panel27" type="Panel" parent="ColorRect/GridContainer" unique_id=865344026]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+script = ExtResource("1_kwdjh")
+
+[node name="Panel28" type="Panel" parent="ColorRect/GridContainer" unique_id=1793437983]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+script = ExtResource("1_kwdjh")
+
+[node name="Panel29" type="Panel" parent="ColorRect/GridContainer" unique_id=2065306773]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+script = ExtResource("1_kwdjh")
+
+[node name="Panel30" type="Panel" parent="ColorRect/GridContainer" unique_id=568847240]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+script = ExtResource("1_kwdjh")
+
+[node name="Panel31" type="Panel" parent="ColorRect/GridContainer" unique_id=1200085326]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+script = ExtResource("1_kwdjh")
+
+[node name="Panel32" type="Panel" parent="ColorRect/GridContainer" unique_id=694098300]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+script = ExtResource("1_kwdjh")
+
+[node name="Panel33" type="Panel" parent="ColorRect/GridContainer" unique_id=1134720465]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+script = ExtResource("1_kwdjh")
+
+[node name="Panel34" type="Panel" parent="ColorRect/GridContainer" unique_id=1429142517]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+script = ExtResource("1_kwdjh")
+
+[node name="Panel35" type="Panel" parent="ColorRect/GridContainer" unique_id=578596478]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+script = ExtResource("1_kwdjh")
+
+[node name="Panel36" type="Panel" parent="ColorRect/GridContainer" unique_id=1591973839]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+script = ExtResource("1_kwdjh")
+
+[node name="Panel37" type="Panel" parent="ColorRect/GridContainer" unique_id=141781537]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+script = ExtResource("1_kwdjh")
+
+[node name="Panel38" type="Panel" parent="ColorRect/GridContainer" unique_id=1015218314]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+script = ExtResource("1_kwdjh")
+
+[node name="Panel39" type="Panel" parent="ColorRect/GridContainer" unique_id=106179221]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+script = ExtResource("1_kwdjh")
+
+[node name="Panel40" type="Panel" parent="ColorRect/GridContainer" unique_id=974785359]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+script = ExtResource("1_kwdjh")
+
+[node name="Panel41" type="Panel" parent="ColorRect/GridContainer" unique_id=1026099460]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+script = ExtResource("1_kwdjh")
+
+[node name="Panel42" type="Panel" parent="ColorRect/GridContainer" unique_id=2138430360]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+script = ExtResource("1_kwdjh")
+
+[node name="Panel43" type="Panel" parent="ColorRect/GridContainer" unique_id=1953873477]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+script = ExtResource("1_kwdjh")
+
+[node name="Panel44" type="Panel" parent="ColorRect/GridContainer" unique_id=492066834]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+script = ExtResource("1_kwdjh")
+
+[node name="Panel45" type="Panel" parent="ColorRect/GridContainer" unique_id=362136282]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+script = ExtResource("1_kwdjh")
+
+[node name="Panel46" type="Panel" parent="ColorRect/GridContainer" unique_id=483807304]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+script = ExtResource("1_kwdjh")
+
+[node name="Panel47" type="Panel" parent="ColorRect/GridContainer" unique_id=1306974649]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+script = ExtResource("1_kwdjh")
+
+[node name="Panel48" type="Panel" parent="ColorRect/GridContainer" unique_id=121483946]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+script = ExtResource("1_kwdjh")
+
+[node name="Panel49" type="Panel" parent="ColorRect/GridContainer" unique_id=1487227276]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+script = ExtResource("1_kwdjh")
+
+[node name="ColorRect2" type="ColorRect" parent="." unique_id=1889207665]
+layout_mode = 0
+offset_left = 525.0
+offset_top = 136.0
+offset_right = 761.0
+offset_bottom = 481.0
+color = Color(0.8089983, 0.8089983, 0.8089982, 1)
+
+[node name="GridContainer" type="GridContainer" parent="ColorRect2" unique_id=305830630]
+layout_mode = 0
+columns = 7
+
+[node name="Panel" type="Panel" parent="ColorRect2/GridContainer" unique_id=898117124]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+script = ExtResource("1_kwdjh")
+
+[node name="ColorRect" type="ColorRect" parent="ColorRect2/GridContainer/Panel" unique_id=183446207]
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.1
+anchor_top = 0.1
+anchor_right = 0.1
+anchor_bottom = 0.1
+offset_left = 25.0
+offset_top = 25.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(10, 10)
+mouse_filter = 1
+color = Color(0.9019608, 0.105882354, 0, 1)
+
+[node name="Panel2" type="Panel" parent="ColorRect2/GridContainer" unique_id=1060503504]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+script = ExtResource("1_kwdjh")
+
+[node name="Panel3" type="Panel" parent="ColorRect2/GridContainer" unique_id=1431572188]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+script = ExtResource("1_kwdjh")
+
+[node name="Panel4" type="Panel" parent="ColorRect2/GridContainer" unique_id=739305146]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+script = ExtResource("1_kwdjh")
+
+[node name="Panel5" type="Panel" parent="ColorRect2/GridContainer" unique_id=1849783680]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+script = ExtResource("1_kwdjh")
+
+[node name="Panel6" type="Panel" parent="ColorRect2/GridContainer" unique_id=2025480402]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+script = ExtResource("1_kwdjh")
+
+[node name="Panel7" type="Panel" parent="ColorRect2/GridContainer" unique_id=1988822638]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+script = ExtResource("1_kwdjh")
+
+[node name="Panel8" type="Panel" parent="ColorRect2/GridContainer" unique_id=1857412264]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+script = ExtResource("1_kwdjh")
+
+[node name="Panel9" type="Panel" parent="ColorRect2/GridContainer" unique_id=447780924]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+script = ExtResource("1_kwdjh")
+
+[node name="Panel10" type="Panel" parent="ColorRect2/GridContainer" unique_id=860190006]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+script = ExtResource("1_kwdjh")
+
+[node name="Panel11" type="Panel" parent="ColorRect2/GridContainer" unique_id=488284324]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+script = ExtResource("1_kwdjh")
+
+[node name="Panel12" type="Panel" parent="ColorRect2/GridContainer" unique_id=2109008151]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+script = ExtResource("1_kwdjh")
+
+[node name="Panel13" type="Panel" parent="ColorRect2/GridContainer" unique_id=1052593137]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+script = ExtResource("1_kwdjh")
+
+[node name="Panel14" type="Panel" parent="ColorRect2/GridContainer" unique_id=1318008057]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+script = ExtResource("1_kwdjh")
+
+[node name="Panel15" type="Panel" parent="ColorRect2/GridContainer" unique_id=2016852518]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+script = ExtResource("1_kwdjh")
+
+[node name="Panel16" type="Panel" parent="ColorRect2/GridContainer" unique_id=665910710]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+script = ExtResource("1_kwdjh")
+
+[node name="Panel17" type="Panel" parent="ColorRect2/GridContainer" unique_id=2129167751]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+script = ExtResource("1_kwdjh")
+
+[node name="Panel18" type="Panel" parent="ColorRect2/GridContainer" unique_id=42322816]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+script = ExtResource("1_kwdjh")
+
+[node name="Panel19" type="Panel" parent="ColorRect2/GridContainer" unique_id=1601559370]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+script = ExtResource("1_kwdjh")
+
+[node name="Panel20" type="Panel" parent="ColorRect2/GridContainer" unique_id=1904743019]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+script = ExtResource("1_kwdjh")
+
+[node name="Panel21" type="Panel" parent="ColorRect2/GridContainer" unique_id=471415246]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+script = ExtResource("1_kwdjh")
+
+[node name="Panel22" type="Panel" parent="ColorRect2/GridContainer" unique_id=88923087]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+script = ExtResource("1_kwdjh")
+
+[node name="Panel23" type="Panel" parent="ColorRect2/GridContainer" unique_id=210075275]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+script = ExtResource("1_kwdjh")
+
+[node name="Panel24" type="Panel" parent="ColorRect2/GridContainer" unique_id=1626342307]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+script = ExtResource("1_kwdjh")
+
+[node name="Panel25" type="Panel" parent="ColorRect2/GridContainer" unique_id=1694101536]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+script = ExtResource("1_kwdjh")
+
+[node name="Panel26" type="Panel" parent="ColorRect2/GridContainer" unique_id=1222486369]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+script = ExtResource("1_kwdjh")
+
+[node name="Panel27" type="Panel" parent="ColorRect2/GridContainer" unique_id=980911977]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+script = ExtResource("1_kwdjh")
+
+[node name="Panel28" type="Panel" parent="ColorRect2/GridContainer" unique_id=1684695983]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+script = ExtResource("1_kwdjh")
+
+[node name="Panel29" type="Panel" parent="ColorRect2/GridContainer" unique_id=1207614759]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+script = ExtResource("1_kwdjh")
+
+[node name="Panel30" type="Panel" parent="ColorRect2/GridContainer" unique_id=1127960328]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+script = ExtResource("1_kwdjh")
+
+[node name="Panel31" type="Panel" parent="ColorRect2/GridContainer" unique_id=1480901795]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+script = ExtResource("1_kwdjh")
+
+[node name="Panel32" type="Panel" parent="ColorRect2/GridContainer" unique_id=1153225562]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+script = ExtResource("1_kwdjh")
+
+[node name="Panel33" type="Panel" parent="ColorRect2/GridContainer" unique_id=1409395299]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+script = ExtResource("1_kwdjh")
+
+[node name="Panel34" type="Panel" parent="ColorRect2/GridContainer" unique_id=1674953016]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+script = ExtResource("1_kwdjh")
+
+[node name="Panel35" type="Panel" parent="ColorRect2/GridContainer" unique_id=218054610]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+script = ExtResource("1_kwdjh")
+
+[node name="Panel36" type="Panel" parent="ColorRect2/GridContainer" unique_id=45590586]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+script = ExtResource("1_kwdjh")
+
+[node name="Panel37" type="Panel" parent="ColorRect2/GridContainer" unique_id=405651376]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+script = ExtResource("1_kwdjh")
+
+[node name="Panel38" type="Panel" parent="ColorRect2/GridContainer" unique_id=1922616576]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+script = ExtResource("1_kwdjh")
+
+[node name="Panel39" type="Panel" parent="ColorRect2/GridContainer" unique_id=1239742002]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+script = ExtResource("1_kwdjh")
+
+[node name="Panel40" type="Panel" parent="ColorRect2/GridContainer" unique_id=264623726]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+script = ExtResource("1_kwdjh")
+
+[node name="Panel41" type="Panel" parent="ColorRect2/GridContainer" unique_id=1791369475]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+script = ExtResource("1_kwdjh")
+
+[node name="Panel42" type="Panel" parent="ColorRect2/GridContainer" unique_id=1382685741]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+script = ExtResource("1_kwdjh")
+
+[node name="Panel43" type="Panel" parent="ColorRect2/GridContainer" unique_id=40029610]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+script = ExtResource("1_kwdjh")
+
+[node name="Panel44" type="Panel" parent="ColorRect2/GridContainer" unique_id=1255484296]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+script = ExtResource("1_kwdjh")
+
+[node name="Panel45" type="Panel" parent="ColorRect2/GridContainer" unique_id=1891610635]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+script = ExtResource("1_kwdjh")
+
+[node name="Panel46" type="Panel" parent="ColorRect2/GridContainer" unique_id=1770838537]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+script = ExtResource("1_kwdjh")
+
+[node name="Panel47" type="Panel" parent="ColorRect2/GridContainer" unique_id=1650725700]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+script = ExtResource("1_kwdjh")
+
+[node name="Panel48" type="Panel" parent="ColorRect2/GridContainer" unique_id=246996021]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+script = ExtResource("1_kwdjh")
+
+[node name="Panel49" type="Panel" parent="ColorRect2/GridContainer" unique_id=1712913186]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+script = ExtResource("1_kwdjh")

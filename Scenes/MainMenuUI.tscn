@@ -50,6 +50,10 @@ size_flags_vertical = 4
 layout_mode = 2
 alignment = 1
 
+[node name="InventoryGameButton" type="Button" parent="AspectRatioContainer/Panel/LayoutVBoxContainer/MarginContainer/MenuVBoxContainer" unique_id=25444418]
+layout_mode = 2
+text = "Inventory Game"
+
 [node name="NavigationGameButton" type="Button" parent="AspectRatioContainer/Panel/LayoutVBoxContainer/MarginContainer/MenuVBoxContainer" unique_id=1012177419]
 layout_mode = 2
 text = "Navigation Game"
@@ -71,6 +75,7 @@ text = "Options"
 layout_mode = 2
 text = "Exit"
 
+[connection signal="pressed" from="AspectRatioContainer/Panel/LayoutVBoxContainer/MarginContainer/MenuVBoxContainer/InventoryGameButton" to="." method="_on_inventory_game_button_pressed"]
 [connection signal="pressed" from="AspectRatioContainer/Panel/LayoutVBoxContainer/MarginContainer/MenuVBoxContainer/NavigationGameButton" to="." method="_on_navigation_game_button"]
 [connection signal="button_up" from="AspectRatioContainer/Panel/LayoutVBoxContainer/MarginContainer/MenuVBoxContainer/CleaningGameButton" to="." method="_on_cleaning_game_button"]
 [connection signal="button_up" from="AspectRatioContainer/Panel/LayoutVBoxContainer/MarginContainer/MenuVBoxContainer/LoadGameButton" to="." method="_on_load_game_button"]
