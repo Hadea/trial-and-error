@@ -15,7 +15,7 @@ func Spawn():
 func KillCharacter(character: Node2D):
 	CharacterArray.erase(character)
 	character.queue_free()
-	
+
 func KillAll():
 	for charToKill in CharacterArray:
 		charToKill.queue_free()

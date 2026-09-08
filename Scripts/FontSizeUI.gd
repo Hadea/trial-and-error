@@ -23,7 +23,7 @@ func _unhandled_key_input(event: InputEvent) -> void:
 	var KeyEvent = event as InputEventKey
 	if KeyEvent.keycode == Key.KEY_ESCAPE && KeyEvent.pressed:
 		get_tree().change_scene_to_file("res://Scenes/MainMenuUI.tscn")
-	
+
 
 func _on_size_change(index: int) -> void:
 	SizeSelectLabel.add_theme_font_size_override("font_size", index*4+12)

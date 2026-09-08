@@ -1,14 +1,19 @@
 [gd_scene format=3 uid="uid://l4evwp1umr8s"]
 
 [ext_resource type="Script" uid="uid://cxo2fucpbyav3" path="res://Scripts/InventoryContainer.gd" id="1_kwdjh"]
+[ext_resource type="Script" uid="uid://bght4dgmawpet" path="res://Scenes/InventoryGame.gd" id="1_t1vl7"]
+[ext_resource type="PackedScene" uid="uid://drjuiwfbkno5y" path="res://Scenes/book_color_rect.tscn" id="3_xue35"]
+[ext_resource type="Script" uid="uid://cbyo4j3acue2v" path="res://Scenes/ToolTipPanel.gd" id="4_xue35"]
 
-[node name="InventoryGame" type="Control" unique_id=2069499776]
+[node name="InventoryGame" type="Control" unique_id=2069499776 node_paths=PackedStringArray("tooltip")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_t1vl7")
+tooltip = NodePath("ToolTipPanel")
 
 [node name="ColorRect" type="ColorRect" parent="." unique_id=2057453938]
 layout_mode = 0
@@ -27,22 +32,20 @@ custom_minimum_size = Vector2(30, 30)
 layout_mode = 2
 script = ExtResource("1_kwdjh")
 
-[node name="ColorRect" type="ColorRect" parent="ColorRect/GridContainer/Panel" unique_id=738594207]
-custom_minimum_size = Vector2(20, 20)
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -10.0
-offset_top = -10.0
-offset_right = 10.0
-offset_bottom = 10.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 1
-color = Color(0.2398856, 0.4627601, 1, 1)
+[node name="BookColorRect" parent="ColorRect/GridContainer/Panel" unique_id=84835825 instance=ExtResource("3_xue35")]
+layout_mode = 0
+anchors_preset = 0
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 1
+grow_vertical = 1
+color = Color(0.34470135, 0.39707586, 1, 1)
 
 [node name="Panel2" type="Panel" parent="ColorRect/GridContainer" unique_id=1288205464]
 custom_minimum_size = Vector2(30, 30)
@@ -301,21 +304,19 @@ custom_minimum_size = Vector2(30, 30)
 layout_mode = 2
 script = ExtResource("1_kwdjh")
 
-[node name="ColorRect" type="ColorRect" parent="ColorRect2/GridContainer/Panel" unique_id=183446207]
-custom_minimum_size = Vector2(20, 20)
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.1
-anchor_top = 0.1
-anchor_right = 0.1
-anchor_bottom = 0.1
-offset_left = 25.0
-offset_top = 25.0
-grow_horizontal = 2
-grow_vertical = 2
-pivot_offset = Vector2(10, 10)
-mouse_filter = 1
-color = Color(0.9019608, 0.105882354, 0, 1)
+[node name="BookColorRect" parent="ColorRect2/GridContainer/Panel" unique_id=152954509 instance=ExtResource("3_xue35")]
+layout_mode = 0
+anchors_preset = 0
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 1
+grow_vertical = 1
 
 [node name="Panel2" type="Panel" parent="ColorRect2/GridContainer" unique_id=1060503504]
 custom_minimum_size = Vector2(30, 30)
@@ -556,3 +557,26 @@ script = ExtResource("1_kwdjh")
 custom_minimum_size = Vector2(30, 30)
 layout_mode = 2
 script = ExtResource("1_kwdjh")
+
+[node name="ToolTipPanel" type="Panel" parent="." unique_id=1071562701]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+offset_transform_enabled = true
+offset_transform_position = Vector2(-20, -20)
+script = ExtResource("4_xue35")
+swapOffset = Vector2(300, 150)
+
+[node name="RichTextLabel" type="RichTextLabel" parent="ToolTipPanel" unique_id=1656736354]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0

@@ -42,7 +42,7 @@ func _physics_process(delta: float) -> void:
 					NavigationTarget = target
 					if navigationAgent.is_target_reachable():
 						reachableTargets.push_back(target)
-						
+
 				if reachableTargets.size() > 0: # reachable targets exist
 					NavigationTarget = reachableTargets[randi_range(0,reachableTargets.size()-1)] # choosing random target from list
 					CurrentCharacterStatus = Constants.CharacterStatus.Walking
@@ -75,7 +75,7 @@ func _physics_process(delta: float) -> void:
 					else:
 						# walking towards the exit until reached
 						transform.origin = global_position.move_toward(navigationAgent.get_next_path_position(), WalkingSpeed*delta)
-				
+
 			Constants.CharacterStatus.NoTarget:
 				print_debug("No target to move to")
 				timeToNextStatus = 1.0

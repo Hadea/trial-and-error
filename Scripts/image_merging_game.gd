@@ -24,7 +24,7 @@ func _ready() -> void:
 	BrushB.visible = false
 	currentLayer = LayerSeletion.None
 #	BrushButtonGroup.connect("pressed", _on_group_button_pressed)
-	
+
 	#caching images for manipulation
 	backgroundImage = BackGroundSprite.texture.get_image()
 	brushAImage = BrushA.texture.get_image()

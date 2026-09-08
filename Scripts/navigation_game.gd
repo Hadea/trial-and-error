@@ -23,7 +23,7 @@ func _process(_delta: float) -> void:
 		for character in spawner.CharacterArray:
 			DebugLabel.text += str(floor(character.transform.origin)) + " " + str(Constants.CharacterStatus.keys()[character.CurrentCharacterStatus]) + "\n"
 	WallCursor.global_position = get_viewport().get_mouse_position()
-	
+
 
 
 func _input(event: InputEvent) -> void:
@@ -49,8 +49,8 @@ func _input(event: InputEvent) -> void:
 func _on_timer_timeout() -> void: ## If Timer has reached end and spawns a character
 	for spawner in CharacterSpawner:
 		spawner.Spawn()
-	
-	
+
+
 func _on_debug_kill_all_button() -> void:
 	for spawner in CharacterSpawner:
 		spawner.KillAll()

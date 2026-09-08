@@ -62,13 +62,13 @@ func _enter_tree() -> void:
 	WaxSprite = Image.create_empty(texImage.get_width(), texImage.get_height(), false,Image.FORMAT_RGBA8)
 	texImage = ImageTexture.create_from_image(WaxSprite)
 	Book.material.set_shader_parameter("WaxTexture", texImage)
-	
+
 	pixelStatus[cleaningLayers.DUST].y = _getCleanedPixelCount(cleaningLayers.DUST)
 	pixelStatus[cleaningLayers.STAIN].y = _getCleanedPixelCount(cleaningLayers.STAIN)
 	pixelStatus[cleaningLayers.RUBBER].y = _getCleanedPixelCount(cleaningLayers.RUBBER)
 	pixelStatus[cleaningLayers.WAX].y = _getCleanedPixelCount(cleaningLayers.WAX)
-	
-	pixelAmount = DustSpriteImage.get_width() * DustSpriteImage.get_height();	
+
+	pixelAmount = DustSpriteImage.get_width() * DustSpriteImage.get_height();
 	eraserTransform = ToolDustSprite.transform #backup of the original transform for scaling relative to original size
 	_on_cleaning_technique_selected(cleaningLayers.DUST)
 
@@ -90,19 +90,19 @@ func _cleanAtCoords(delta: float, coords: Vector2) -> void:
 		cleaningLayers.DUST:
 			var r2: int = ToolDustSize * ToolDustSize
 			var toolStrengthPerFrame = ToolDustStrength * delta
-	
+
 			for y in range(coords.y-ToolDustSize, coords.y+ToolDustSize):
 				if y < 0 or y > DustSpriteImage.get_height()-1: # skip if out of image bounds
 					continue
 				for x in range(coords.x - ToolDustSize, coords.x + ToolDustSize):
 					if x < 0 or x > DustSpriteImage.get_width()-1: # skip if out of image bounds
 						continue
-						
+
 					# check if within distance of center point
-					
+
 					var dotX: int = x - int(coords.x)
 					var dotY: int = y - int(coords.y)
-					var distance2: int = dotX * dotX + dotY * dotY 
+					var distance2: int = dotX * dotX + dotY * dotY
 					if distance2 <= r2:
 						var currentPixel: Color = DustSpriteImage.get_pixel(x,y)
 						if ToolDustGradient:
@@ -112,11 +112,11 @@ func _cleanAtCoords(delta: float, coords: Vector2) -> void:
 						DustSpriteImage.set_pixel(x, y, currentPixel)
 			# cleaning finished. Sending new image to shader
 			Book.material.set_shader_parameter("DustTexture", ImageTexture.create_from_image(DustSpriteImage))
-			
+
 		cleaningLayers.STAIN:
 			var r2: int = ToolStainSize * ToolStainSize
 			var toolStrengthPerFrame = ToolStainStrength * delta
-	
+
 			for y in range(coords.y-ToolStainSize, coords.y+ToolStainSize):
 				if y < 0 or y > StainSpriteImage.get_height()-1: # skip if out of image bounds
 					continue
@@ -125,62 +125,62 @@ func _cleanAtCoords(delta: float, coords: Vector2) -> void:
 						continue
 					if DustSpriteImage.get_pixel(x,y).a > 0: continue
 					# check if within distance of center point
-					
+
 					var dotX: int = x - int(coords.x)
 					var dotY: int = y - int(coords.y)
-					var distance2: int = dotX * dotX + dotY * dotY 
+					var distance2: int = dotX * dotX + dotY * dotY
 					if distance2 <= r2:
 						var currentPixel: Color = StainSpriteImage.get_pixel(x,y)
 						if ToolStainGradient:
 							currentPixel.a= max(0, currentPixel.a - toolStrengthPerFrame * (r2 / max(distance2,0.01)))
 						else:
 							currentPixel.a= max(0, currentPixel.a - toolStrengthPerFrame)
-						
+
 						StainSpriteImage.set_pixel(x, y, currentPixel)
 			# cleaning finished. Sending new image to shader
 			Book.material.set_shader_parameter("StainTexture",  ImageTexture.create_from_image(StainSpriteImage))
-			
+
 		cleaningLayers.RUBBER:
 			var toolStrengthPerFrame = ToolRubberStrength * delta
-	
+
 			for y in range(coords.y-ToolRubberSize, coords.y+ToolRubberSize):
 				if y < 0 or y > RubberSpriteImage.get_height()-1: # skip if out of image bounds
 					continue
 				for x in range(coords.x - ToolRubberSize, coords.x + ToolRubberSize):
 					if x < 0 or x > RubberSpriteImage.get_width()-1: # skip if out of image bounds
 						continue
-						
+
 					var currentPixel: Color = RubberSpriteImage.get_pixel(x,y)
 					currentPixel.a= max(0, currentPixel.a - toolStrengthPerFrame)
-					
+
 					RubberSpriteImage.set_pixel(x, y, currentPixel)
 			# cleaning finished. Sending new image to shader
 			Book.material.set_shader_parameter("RubberTexture",  ImageTexture.create_from_image(RubberSpriteImage))
 
 		cleaningLayers.WAX:
-			
+
 			var r2: int = ToolWaxSize * ToolWaxSize
 			var toolStrengthPerFrame = ToolWaxStrength * delta
-	
+
 			for y in range(coords.y-ToolWaxSize, coords.y+ToolWaxSize):
 				if y < 0 or y > WaxSprite.get_height()-1: # skip if out of image bounds
 					continue
 				for x in range(coords.x - ToolWaxSize, coords.x + ToolWaxSize):
 					if x < 0 or x > WaxSprite.get_width()-1: # skip if out of image bounds
 						continue
-						
+
 					# check if within distance of center point
-					
+
 					var dotX: int = x - int(coords.x)
 					var dotY: int = y - int(coords.y)
-					var distance2: int = dotX * dotX + dotY * dotY 
+					var distance2: int = dotX * dotX + dotY * dotY
 					if distance2 <= r2:
 						var currentPixel: Color = WaxColor
 						if ToolWaxGradient:
 							currentPixel.a= max(0, currentPixel.a - toolStrengthPerFrame * (r2 / max(distance2,0.01)))
 						else:
 							currentPixel.a= max(0, currentPixel.a - toolStrengthPerFrame)
-						
+
 						WaxSprite.set_pixel(x, y, currentPixel)
 			# cleaning finished. Sending new image to shader
 			Book.material.set_shader_parameter("WaxTexture", ImageTexture.create_from_image(WaxSprite))
@@ -188,11 +188,11 @@ func _cleanAtCoords(delta: float, coords: Vector2) -> void:
 		_:
 			print("Broken cleaning Layer selection")
 			pass # quit when unknown tool selected
-	# updating UI	
+	# updating UI
 	pixelStatus[currentCleaningLayer].x = _getCleanedPixelCount(currentCleaningLayer)
 	_updateProgress()
 
-	
+
 func _updateProgress() -> void: ## updates all progress bars to the current value of the cleaning progress
 	DustCompletionProgressBar.value = 100.0 / (pixelAmount-pixelStatus[cleaningLayers.DUST].y) * (pixelStatus[cleaningLayers.DUST].x - pixelStatus[cleaningLayers.DUST].y)
 	StainCompletionProgressBar.value = 100.0 / (pixelAmount-pixelStatus[cleaningLayers.STAIN].y) * (pixelStatus[cleaningLayers.STAIN].x - pixelStatus[cleaningLayers.STAIN].y)
@@ -203,7 +203,7 @@ func _updateProgress() -> void: ## updates all progress bars to the current valu
 func _input(event: InputEvent):
 	if event is InputEventKey and event.pressed and event.keycode == KEY_ESCAPE:
 		get_tree().change_scene_to_file("res://Scenes/MainMenuUI.tscn")
-		
+
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
 		if event.is_pressed():
 			isCleaning = true
@@ -238,19 +238,19 @@ func _getCleanedPixelCount(layerToCount: cleaningLayers) -> int:
 
 func _cleanCircular(imageToClean: Image, coords: Vector2i, radius: int, strength: float, gradient: bool):
 	var r2: int = radius * radius
-	
+
 	for y in range(coords.y-radius, coords.y+radius):
 		if y < 0 or y > imageToClean.get_height()-1: # skip if out of image bounds
 			continue
 		for x in range(coords.x - radius, coords.x + radius):
 			if x < 0 or x > imageToClean.get_width()-1: # skip if out of image bounds
 				continue
-				
+
 			# check if within distance of center point
-			
+
 			var dotX: int = x - coords.x
 			var dotY: int = y - coords.y
-			var distance2: int = dotX * dotX + dotY * dotY 
+			var distance2: int = dotX * dotX + dotY * dotY
 			if distance2 <= r2:
 				var currentPixel: Color = imageToClean.get_pixel(x,y)
 				if currentCleaningLayer == cleaningLayers.WAX:
@@ -260,7 +260,7 @@ func _cleanCircular(imageToClean: Image, coords: Vector2i, radius: int, strength
 						currentPixel.a= max(0, currentPixel.a - strength * (r2 / max(distance2,0.01)))
 					else:
 						currentPixel.a= max(0, currentPixel.a - strength)
-				
+
 				imageToClean.set_pixel(x, y, currentPixel)
 
 
@@ -314,7 +314,7 @@ func _on_debug_uncleaned_button() -> void:
 		cleaningLayers.WAX:
 			for y in range(0, WaxSprite.get_height()):
 				for x in range(0, WaxSprite.get_width()):
-					if WaxSprite.get_pixel(x,y).a == 0.0: 
+					if WaxSprite.get_pixel(x,y).a == 0.0:
 						WaxSprite.set_pixel(x,y,Color.DEEP_PINK)
 						counter+=1
 			Book.material.set_shader_parameter("WaxTexture", ImageTexture.create_from_image(WaxSprite))
@@ -326,7 +326,7 @@ func _on_debug_pixel_count_button() -> void:
 	var pixelCountClean: int = 0
 	var pixelCountDitry: int = 0
 	var pixelCountCalculated: int = 0
-	
+
 	match currentCleaningLayer:
 		cleaningLayers.DUST:
 			for y in range(0, DustSpriteImage.get_height()):
