@@ -13,7 +13,6 @@ func _ready() -> void:
 		book = get_child(0) as BookColorRect
 
 
-
 func _get_drag_data(_at_position: Vector2) -> Variant:
 	if not book: return #empty slot has nothing to drag
 	var preview: BookColorRect = book.duplicate()

@@ -46,6 +46,8 @@ offset_bottom = 20.0
 grow_horizontal = 1
 grow_vertical = 1
 color = Color(0.34470135, 0.39707586, 1, 1)
+Name = "looooorem!!"
+Content = "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam"
 
 [node name="Panel2" type="Panel" parent="ColorRect/GridContainer" unique_id=1288205464]
 custom_minimum_size = Vector2(30, 30)
@@ -317,6 +319,8 @@ offset_right = 20.0
 offset_bottom = 20.0
 grow_horizontal = 1
 grow_vertical = 1
+Name = "Lorem Ipsum Dolor Sit"
+Content = "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam"
 
 [node name="Panel2" type="Panel" parent="ColorRect2/GridContainer" unique_id=1060503504]
 custom_minimum_size = Vector2(30, 30)
@@ -567,16 +571,20 @@ anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -20.0
 offset_top = -20.0
-offset_right = 20.0
-offset_bottom = 20.0
+offset_right = 80.0
+offset_bottom = 130.0
 grow_horizontal = 2
 grow_vertical = 2
 offset_transform_enabled = true
-offset_transform_position = Vector2(-20, -20)
+offset_transform_position_ratio = Vector2(-0.5, -0.5)
 script = ExtResource("4_xue35")
-swapOffset = Vector2(300, 150)
+swapOffset = Vector2(570, 200)
 
 [node name="RichTextLabel" type="RichTextLabel" parent="ToolTipPanel" unique_id=1656736354]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+custom_minimum_size = Vector2(-1, -1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
